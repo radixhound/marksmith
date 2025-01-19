@@ -4,7 +4,7 @@
   data: {
     controller: "marksmith",
     marksmith_target: "toolbar",
-    # marksmith_preview_url_value: markdown_previews_path,
+    marksmith_preview_url_value: marksmith.markdown_previews_path,
     marksmith_active_tab_class: "bg-white",
     marksmith_attach_url_value: rails_direct_uploads_url,
     marksmith_resource_class_value: @resource.class.name,
@@ -14,80 +14,70 @@
   <div class="w-full flex-1 grow flex justify-bewteen bg-zinc-50 rounded px-2 py-1">
     <div class="flex-1 flex items-center">
       <button class="<%= button_classes %>" data-action="click->marksmith#switchToPreview" data-marksmith-target="previewTabButton">
-        <%= t('avo.preview').humanize %>
+        <%= t('marksmith.preview').humanize %>
       </button>
       <button class="<%= button_classes %> hidden bg-zinc-200" data-action="click->marksmith#switchToWrite" data-marksmith-target="writeTabButton">
-        <%= t('avo.write').humanize %>
+        <%= t('marksmith.write').humanize %>
       </button>
     </div>
 
     <markdown-toolbar for="<%= name %>" class="flex space-x-1">
       <md-bold
-        title="<%= t('avo.bold').humanize %>"
-        data-tippy="tooltip"
+        title="<%= t('marksmith.bold').humanize %>"
         class="<%= button_classes %>"
       >
         <%= svg "bold", class: "inline size-4" %>
       </md-bold>
       <md-header
-        title="<%= t('avo.heading').humanize %>"
-        data-tippy="tooltip"
+        title="<%= t('marksmith.heading').humanize %>"
         class="<%= button_classes %>"
       >
         <%= svg "heading", class: "inline size-4" %>
       </md-header>
       <md-italic
-        title="<%= t('avo.italic').humanize %>"
-        data-tippy="tooltip"
+        title="<%= t('marksmith.italic').humanize %>"
         class="<%= button_classes %>"
       >
         <%= svg "italic", class: "inline size-4" %>
       </md-italic>
       <md-quote
-        title="<%= t('avo.quote').humanize %>"
-        data-tippy="tooltip"
+        title="<%= t('marksmith.quote').humanize %>"
         class="<%= button_classes %>"
       >
         <%= svg "quote", class: "inline size-4" %>
       </md-quote>
       <md-code
-        title="<%= t('avo.code').humanize %>"
-        data-tippy="tooltip"
+        title="<%= t('marksmith.code').humanize %>"
         class="<%= button_classes %>"
       >
         <%= svg "code", class: "inline size-4" %>
       </md-code>
       <md-link
-        title="<%= t('avo.link').humanize %>"
-        data-tippy="tooltip"
+        title="<%= t('marksmith.link').humanize %>"
         class="<%= button_classes %>"
       >
         <%= svg "link", class: "inline size-4" %>
       </md-link>
       <md-image
-        title="<%= t('avo.image').humanize %>"
-        data-tippy="tooltip"
+        title="<%= t('marksmith.image').humanize %>"
         class="<%= button_classes %>"
       >
         <%= svg "photo", class: "inline size-4" %>
       </md-image>
       <md-unordered-list
-        title="<%= t('avo.unordered_list').humanize %>"
-        data-tippy="tooltip"
+        title="<%= t('marksmith.unordered_list').humanize %>"
         class="<%= button_classes %>"
       >
         <%= svg "list-bullet", class: "inline size-4" %>
       </md-unordered-list>
       <md-ordered-list
-        title="<%= t('avo.ordered_list').humanize %>"
-        data-tippy="tooltip"
+        title="<%= t('marksmith.ordered_list').humanize %>"
         class="<%= button_classes %>"
       >
         <%= svg "numbered-list", class: "inline size-4" %>
       </md-ordered-list>
       <md-task-list
-        title="<%= t('avo.task_list').humanize %>"
-        data-tippy="tooltip"
+        title="<%= t('marksmith.task_list').humanize %>"
         class="<%= button_classes %>"
       >
         <%= svg "list-todo", class: "inline size-4" %>

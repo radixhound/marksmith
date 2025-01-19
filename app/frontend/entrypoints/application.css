@@ -1,0 +1,10 @@
+@layer theme, base, components, utilities;
+
+@import "tailwindcss" layer(theme);
+@import "tailwindcss" layer(utilities);
+/* @import "tailwindcss" prefix(ms); */
+
+@source "./../../views/";
+
+
+

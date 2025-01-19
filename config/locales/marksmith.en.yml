@@ -29,15 +29,4 @@
 
 en:
   marksmith:
-    bold: bold
-    code: code
-    heading: heading
-    image: image
-    italic: italic
-    link: link
-    ordered_list: ordered list
-    preview: preview
-    quote: quote
-    task_list: task_list
-    unordered_list: unordered list
-    write: write
+    hello: "Hello world"
