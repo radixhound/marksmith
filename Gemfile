@@ -16,3 +16,9 @@ gem "rubocop-rails-omakase", require: false
 # gem "debug", ">= 1.0.0"
 gem 'vite_rails'
 gem 'stimulus-rails'
+
+# Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+gem "web-console", ">= 3.3.0"
+gem "listen", ">= 3.5.1"
+
+gem "tailwindcss-rails", "~> 3.2"
