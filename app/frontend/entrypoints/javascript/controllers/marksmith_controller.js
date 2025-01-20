@@ -17,7 +17,7 @@ export default class extends Controller {
     fieldId: String,
   }
 
-  static targets = ['fieldElement', 'previewElement', 'writeTabButton', 'previewTabButton']
+  static targets = ['fieldElement', 'previewElement', 'writeTabButton', 'previewTabButton', 'toolbar']
 
   connect() {
     subscribe(this.fieldElementTarget, { defaultPlainTextPaste: { urlLinks: true } })
@@ -27,12 +27,15 @@ export default class extends Controller {
     event.preventDefault()
 
     // toggle buttons
-    this.writeTabButtonTarget.classList.add('hidden')
-    this.previewTabButtonTarget.classList.remove('hidden')
+    this.writeTabButtonTarget.classList.add('ms:hidden')
+    this.previewTabButtonTarget.classList.remove('ms:hidden')
 
     // toggle write/preview buttons
-    this.fieldElementTarget.classList.remove('hidden')
-    this.previewElementTarget.classList.add('hidden')
+    this.fieldElementTarget.classList.remove('ms:hidden')
+    this.previewElementTarget.classList.add('ms:hidden')
+
+    // toggle the toolbar back
+    this.toolbarTarget.classList.remove('ms:hidden')
   }
 
   switchToPreview(event) {
@@ -52,12 +55,15 @@ export default class extends Controller {
     this.previewElementTarget.style.minHeight = `${this.fieldElementTarget.offsetHeight}px`
 
     // toggle buttons
-    this.writeTabButtonTarget.classList.remove('hidden')
-    this.previewTabButtonTarget.classList.add('hidden')
+    this.writeTabButtonTarget.classList.remove('ms:hidden')
+    this.previewTabButtonTarget.classList.add('ms:hidden')
 
     // toggle elements
-    this.fieldElementTarget.classList.add('hidden')
-    this.previewElementTarget.classList.remove('hidden')
+    this.fieldElementTarget.classList.add('ms:hidden')
+    this.previewElementTarget.classList.remove('ms:hidden')
+
+    // toggle the toolbar
+    this.toolbarTarget.classList.add('ms:hidden')
   }
 
   dropUpload(event) {

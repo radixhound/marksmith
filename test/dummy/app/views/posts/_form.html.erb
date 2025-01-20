@@ -16,9 +16,12 @@
     <%= form.text_field :title %>
   </div>
 
-  <div>
+  <div class="w-full">
     <%= form.label :body, style: "display: block" %>
-    <%= form.marksmith :body %>
+    <div style="width: 650px; resize: both; overflow: auto; padding: 10px;">
+      <%#= form.marksmith :body, disabled: false, style: "border: 1px solid red;", placeholder: "Enter your markdown body here" %>
+      <%= form.marksmith :body %>
+    </div>
 
   </div>
 
