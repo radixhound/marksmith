@@ -4,7 +4,7 @@
   placeholder = local_assigns[:placeholder] || nil
   autofocus = local_assigns[:autofocus] || false
   style = local_assigns[:style] || nil
-  classes = local_assigns[:classes] || nil
+  classes = local_assigns[:class] || nil
   rows = local_assigns[:rows] || 15
   value = if defined?(form)
     form.object.send(name)
