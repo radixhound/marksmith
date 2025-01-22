@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     marksmith (0.1.0)
-      rails (>= 8.0.1)
+      rails (>= 7.0.0)
       redcarpet
       rouge
 

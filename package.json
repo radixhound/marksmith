@@ -1,18 +1,49 @@
 {
-  "private": true,
-  "type": "module",
-  "devDependencies": {
-    "vite": "^5.4.11",
-    "vite-plugin-ruby": "^5.1.1"
+  "name": "@avo-hq/marksmith",
+  "description": "GitHub-style markdown editor for Ruby and Rails",
+  "author": "Adrian Marin <adrian@adrianthedev.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/avo-hq/marksmith",
+  "module": "app/assets/builds/marksmith.esm.js",
+  "version": "0.0.3",
+  "exports": {
+    ".": "./dist/marksmith-full.esm.js",
+    "./controller": "./dist/marksmith-controller.esm.js"
   },
-  "dependencies": {
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/avo-hq/marksmith.git"
+  },
+  "bugs": {
+    "url": "https://github.com/avo-hq/marksmith/issues"
+  },
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/marksmith.esm.js"
+  ],
+  "devDependencies": {
     "@github/markdown-toolbar-element": "^2.2.3",
     "@github/paste-markdown": "^1.5.3",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.12",
     "@rails/activestorage": "^8.0.100",
     "@rails/request.js": "^0.0.11",
+    "@rollup/plugin-node-resolve": "^16.0.0",
     "@tailwindcss/vite": "^4.0.0-beta.9",
-    "tailwindcss": "^4.0.0-beta.9"
+    "rollup": "^4.31.0",
+    "tailwindcss": "^4.0.0-beta.9",
+    "vite": "^5.4.11",
+    "vite-plugin-ruby": "^5.1.1"
+  },
+  "scripts": {
+    "build": "yarn build:js && yarn build:css",
+    "build:js": "rollup -c",
+    "build:css": "npx @tailwindcss/cli -i app/frontend/entrypoints/application.css -o app/assets/stylesheets/marksmith.css"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.0-beta.10"
   }
 }
