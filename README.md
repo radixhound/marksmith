@@ -4,6 +4,8 @@ Marksmith is a GitHub-style markdown editor for Rails apps.
 
 It supports Active Storage attachments and comes with a built-in mardown preview renderer.
 
+[![Image](https://github.com/user-attachments/assets/09820413-7b2f-4d9d-a6a5-a9b1d5b90bea)](https://github.com/user-attachments/assets/f257db9d-6bfd-4fbc-ac10-dff1dfc99ff2)
+
 ## Usage
 
 ```erb
