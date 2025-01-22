@@ -13,12 +13,10 @@
     controller: "marksmith",
     marksmith_preview_url_value: marksmith.markdown_previews_path,
     marksmith_active_tab_class: "bg-white",
-    marksmith_attach_url_value: rails_direct_uploads_url,
-    marksmith_resource_class_value: @resource.class.name,
-    marksmith_field_id_value: name,
+    marksmith_attach_url_value: main_app.rails_direct_uploads_url,
+    marksmith_extra_preview_params_value: extra_preview_params.as_json,
   } do %>
-  <% button_classes = class_names("ms:flex ms:items:center ms:cursor-pointer ms:py-1 ms:px-1.5 ms:hover:bg-zinc-200 ms:rounded") %>
-  <% toggle_button_classes = class_names(button_classes, "ms:border-0 ms:bg-none") %>
+  <% toggle_button_classes = class_names(marksmith_button_classes, "ms:border-0 ms:bg-none") %>
   <div class="ms:flex-1 ms:flex-col-reverse ms:@md:flex-row ms:grow ms:flex  ms:justify-bewteen ms:bg-zinc-50 ms:rounded ms:px-2 ms:py-1 ms:gap-y-1">
     <div class="ms:flex-1 ms:flex ms:items:center">
       <button class="<%= toggle_button_classes %>" data-action="click->marksmith#switchToPreview" data-marksmith-target="previewTabButton">
@@ -30,73 +28,22 @@
     </div>
 
     <markdown-toolbar for="<%= name %>" class="<%= class_names("ms:flex ms:flex-wrap", "ms:pointer-events-none": disabled) %>" data-marksmith-target="toolbar">
-      <md-bold
-        title="<%= t('marksmith.bold').humanize %>"
-        class="<%= button_classes %>"
-      >
-        <%= svg "bold", class: "ms:inline ms:size-4" %>
-      </md-bold>
-      <md-header
-        title="<%= t('marksmith.heading').humanize %>"
-        class="<%= button_classes %>"
-      >
-        <%= svg "heading", class: "ms:inline ms:size-4" %>
-      </md-header>
-      <md-italic
-        title="<%= t('marksmith.italic').humanize %>"
-        class="<%= button_classes %>"
-      >
-        <%= svg "italic", class: "ms:inline ms:size-4" %>
-      </md-italic>
-      <md-quote
-        title="<%= t('marksmith.quote').humanize %>"
-        class="<%= button_classes %>"
-      >
-        <%= svg "quote", class: "ms:inline ms:size-4" %>
-      </md-quote>
-      <md-code
-        title="<%= t('marksmith.code').humanize %>"
-        class="<%= button_classes %>"
-      >
-        <%= svg "code", class: "ms:inline ms:size-4" %>
-      </md-code>
-      <md-link
-        title="<%= t('marksmith.link').humanize %>"
-        class="<%= button_classes %>"
-      >
-        <%= svg "link", class: "ms:inline ms:size-4" %>
-      </md-link>
-      <md-image
-        title="<%= t('marksmith.image').humanize %>"
-        class="<%= button_classes %>"
-      >
-        <%= svg "photo", class: "ms:inline ms:size-4" %>
-      </md-image>
-      <md-unordered-list
-        title="<%= t('marksmith.unordered_list').humanize %>"
-        class="<%= button_classes %>"
-      >
-        <%= svg "list-bullet", class: "ms:inline ms:size-4" %>
-      </md-unordered-list>
-      <md-ordered-list
-        title="<%= t('marksmith.ordered_list').humanize %>"
-        class="<%= button_classes %>"
-      >
-        <%= svg "numbered-list", class: "ms:inline ms:size-4" %>
-      </md-ordered-list>
-      <md-task-list
-        title="<%= t('marksmith.task_list').humanize %>"
-        class="<%= button_classes %>"
-      >
-        <%= svg "list-todo", class: "ms:inline ms:size-4" %>
-      </md-task-list>
+      <%= marksmith_toolbar_button "bold" %>
+      <%= marksmith_toolbar_button "header" %>
+      <%= marksmith_toolbar_button "italic" %>
+      <%= marksmith_toolbar_button "quote" %>
+      <%= marksmith_toolbar_button "code" %>
+      <%= marksmith_toolbar_button "link" %>
+      <%= marksmith_toolbar_button "image" %>
+      <%= marksmith_toolbar_button "unordered-list" %>
+      <%= marksmith_toolbar_button "ordered-list" %>
+      <%= marksmith_toolbar_button "task-list" %>
     </markdown-toolbar>
   </div>
 
   <div class="ms:border-t ms:border-zinc-300 ms:flex">
     <%= form.text_area name,
       id: name,
-      # value: @field.value,
       class: class_names("ms:flex ms:flex-1 ms:rounded ms:border-none ms:py-2 ms:px-3  ms:focus:outline-none", classes),
       rows: rows,
       data: {
@@ -109,7 +56,12 @@
       autofocus:,
       style:
     %>
-    <%= content_tag :div, class: "ms:hidden ms:markdown-preview", id: "markdown-preview-#{name}", data: { marksmith_target: "previewElement" } do %>
+    <%= content_tag :div,
+      class: "ms:hidden ms:markdown-preview",
+      id: "markdown-preview-#{name}",
+      data: {
+        marksmith_target: "previewElement",
+      } do %>
       <div class="button-spinner">
         <div class="double-bounce1"></div>
         <div class="double-bounce2"></div>

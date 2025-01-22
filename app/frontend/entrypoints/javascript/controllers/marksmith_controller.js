@@ -13,7 +13,7 @@ export default class extends Controller {
   static values = {
     attachUrl: String,
     previewUrl: String,
-    resourceClass: String,
+    extraPreviewParams: { type: Object, default: {} },
     fieldId: String,
   }
 
@@ -44,9 +44,8 @@ export default class extends Controller {
     post(this.previewUrlValue, {
       body: {
         body: this.fieldElementTarget.value,
-        resource_class: this.resourceClassValue,
-        field_id: this.fieldIdValue,
         element_id: this.previewElementTarget.id,
+        extra_params: this.extraPreviewParamsValue,
       },
       responseKind: 'turbo-stream',
     })
