@@ -6,4 +6,6 @@
 @import "tailwindcss/theme" prefix(ms);
 @import "tailwindcss/utilities" prefix(ms);
 
+@plugin "@tailwindcss/typography";
+
 @source "./../../views/";
