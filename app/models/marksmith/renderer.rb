@@ -1,5 +1,4 @@
 require "redcarpet"
-require "rouge"
 
 module Marksmith
   class Renderer
