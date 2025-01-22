@@ -19,7 +19,7 @@ class Release
     update_copyright
     bundle
     commit
-    # push_npm_package
+    push_npm_package
     build_and_push_gem
     cleanup
 
