@@ -6,6 +6,12 @@
   style = local_assigns[:style] || nil
   classes = local_assigns[:classes] || nil
   rows = local_assigns[:rows] || 15
+  value = if defined?(form)
+    form.object.send(name)
+  else
+    local_assigns[:value] || nil
+  end
+  extra_preview_params = local_assigns[:extra_preview_params] || {}
 %>
 <%= content_tag :div,
   class: "ms:flex ms:flex-col ms:w-full ms:border ms:border-zinc-300 ms:rounded ms:@container ms:group ms:focus-within:border-zinc-500",
@@ -42,7 +48,7 @@
   </div>
 
   <div class="ms:border-t ms:border-zinc-300 ms:flex">
-    <%= form.text_area name,
+    <%= text_area_tag name, value,
       id: name,
       class: class_names("ms:flex ms:flex-1 ms:rounded ms:border-none ms:py-2 ms:px-3  ms:focus:outline-none", classes),
       rows: rows,
