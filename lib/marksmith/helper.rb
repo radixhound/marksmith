@@ -1,5 +1,3 @@
-require "marksmith/component"
-
 module Marksmith
   module Helper
     def marksmithed(body)
