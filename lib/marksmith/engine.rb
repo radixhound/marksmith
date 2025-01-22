@@ -4,6 +4,7 @@ module Marksmith
 
     initializer "marksmith.view_helpers" do
       ActiveSupport.on_load :action_view do
+        require "marksmith/helper"
         ActionView::Base.include Marksmith::Helper
 
         module FormBuilderExtensions
