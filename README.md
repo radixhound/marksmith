@@ -98,6 +98,20 @@ The field supports some of the regular options like `disabled`, `placeholder`, `
 The renderer is powered by [`Redcarpet`](https://github.com/vmg/redcarpet).
 It supports basic styles for headings, `strong`, `italic` and others.
 
+In your `show.html.erb` view or the place where you want to render the compiled markup use the `marksmithed` helper and it will run the content through the renderer.
+
+```erb
+<%= marksmithed post.body %>
+```
+
+## Using with importmap
+
+It should be as simple as running this command and have it pinned in your `importmap.rb` file.
+
+```bash
+bin/importmap pin @avo-hq/marksmith
+```
+
 ## Active Storage
 
 The field supports Actve Storage uploads using drag and drop and pasting files into the field.
@@ -123,6 +137,10 @@ Contribution directions go here.
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
+## Usage in Avo
+
+Marksmith work wonderfully in Avo throught the default [markdown field](https://docs.avohq.io/3.0/fields/markdown.html).
+
 ## Other Open-Source Work
 
 - [`active_storage-blurhash`](https://github.com/avo-hq/active_storage-blurhash) - A plug-n-play [blurhash](https://blurha.sh/) integration for images stored in ActiveStorage
@@ -133,7 +151,7 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Try Avo ⭐️
 
-If you enjoyed this gem try out [Avo](https://github.com/avo-hq/avo). It helps developers build Internal Tools, Admin Panels, CMSes, CRMs, and any other type of Business Apps 10x faster on top of Ruby on Rails.
+If you enjoyed this gem try out [Avo](https://github.com/avo-hq/avo). It doubles engineering speed without hiring extra engineers. Teams build Internal Tools, Admin Panels, Content Management Systems, CRMs, and other types of Business Apps 10x faster on top of Ruby on Rails using Avo.
 
 ## Troubleshooting
 
