@@ -788,6 +788,9 @@
     margin-bottom: 0;
   }
 }
+.ms\:block {
+  display: block;
+}
 .ms\:flex {
   display: flex;
 }
