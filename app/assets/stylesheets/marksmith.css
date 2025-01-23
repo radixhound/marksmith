@@ -870,12 +870,6 @@
   --tw-border-style: none;
   border-style: none;
 }
-.ms\:border-neutral-100 {
-  border-color: var(--ms-color-neutral-100);
-}
-.ms\:border-neutral-200 {
-  border-color: var(--ms-color-neutral-200);
-}
 .ms\:border-neutral-300 {
   border-color: var(--ms-color-neutral-300);
 }
@@ -988,11 +982,6 @@
     border-color: var(--ms-color-neutral-400);
   }
 }
-.ms\:focus-within\:border-neutral-500 {
-  &:focus-within {
-    border-color: var(--ms-color-neutral-500);
-  }
-}
 .ms\:hover\:bg-neutral-100 {
   &:hover {
     @media (hover: hover) {
@@ -1011,13 +1000,6 @@
   &:hover {
     @media (hover: hover) {
       background-color: var(--ms-color-neutral-300);
-    }
-  }
-}
-.ms\:hover\:underline {
-  &:hover {
-    @media (hover: hover) {
-      text-decoration-line: underline;
     }
   }
 }
