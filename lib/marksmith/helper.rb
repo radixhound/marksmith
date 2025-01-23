@@ -14,7 +14,7 @@ module Marksmith
     end
 
     def marksmith_button_classes
-      class_names("ms:flex ms:items:center ms:cursor-pointer ms:py-1 ms:px-1.5 ms:hover:bg-zinc-200 ms:rounded")
+      class_names("ms:flex ms:items:center ms:cursor-pointer ms:py-1 ms:px-1.5 ms:hover:bg-neutral-200 ms:rounded")
     end
 
     def marksmith_toolbar_button(name, **kwargs)

@@ -17,10 +17,10 @@ export default class extends Controller {
     fieldId: String,
   }
 
-  static targets = ['fieldElement', 'previewElement', 'writeTabButton', 'previewTabButton', 'toolbar']
+  static targets = ['fieldContainer', 'fieldElement', 'previewElement', 'writeTabButton', 'previewTabButton', 'toolbar']
 
   connect() {
-    subscribe(this.fieldElementTarget, { defaultPlainTextPaste: { urlLinks: true } })
+    subscribe(this.fieldContainerTarget, { defaultPlainTextPaste: { urlLinks: true } })
   }
 
   switchToWrite(event) {
@@ -31,7 +31,7 @@ export default class extends Controller {
     this.previewTabButtonTarget.classList.remove('ms:hidden')
 
     // toggle write/preview buttons
-    this.fieldElementTarget.classList.remove('ms:hidden')
+    this.fieldContainerTarget.classList.remove('ms:hidden')
     this.previewElementTarget.classList.add('ms:hidden')
 
     // toggle the toolbar back
@@ -58,7 +58,7 @@ export default class extends Controller {
     this.previewTabButtonTarget.classList.add('ms:hidden')
 
     // toggle elements
-    this.fieldElementTarget.classList.add('ms:hidden')
+    this.fieldContainerTarget.classList.add('ms:hidden')
     this.previewElementTarget.classList.remove('ms:hidden')
 
     // toggle the toolbar
@@ -75,6 +75,21 @@ export default class extends Controller {
 
     event.preventDefault()
     this.uploadFiles(event.clipboardData.files)
+  }
+
+  buttonUpload(event) {
+    event.preventDefault()
+    // Create a hidden file input and trigger it
+    const fileInput = document.createElement('input')
+    fileInput.type = 'file'
+    fileInput.multiple = true
+    fileInput.accept = 'image/*,.pdf,.doc,.docx,.txt'
+
+    fileInput.addEventListener('change', (e) => {
+      this.uploadFiles(e.target.files)
+    })
+
+    fileInput.click()
   }
 
   uploadFiles(files) {

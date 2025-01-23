@@ -30,12 +30,14 @@
 
 en:
   marksmith:
+    attach_files: attach files
     bold: bold
     code: code
     header: header
     image: image
     italic: italic
     link: link
+    markdown_is_supported: Markdown is supported
     ordered_list: ordered list
     preview: preview
     quote: quote

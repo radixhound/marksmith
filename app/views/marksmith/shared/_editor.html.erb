@@ -6,6 +6,7 @@
   style = local_assigns[:style] || nil
   classes = local_assigns[:class] || nil
   rows = local_assigns[:rows] || 15
+  field_name = form&.field_name(name) || name
   value = if defined?(form)
     form.object.send(name)
   else
@@ -14,21 +15,25 @@
   extra_preview_params = local_assigns[:extra_preview_params] || {}
 %>
 <%= content_tag :div,
-  class: "ms:flex ms:flex-col ms:w-full ms:border ms:border-zinc-300 ms:rounded ms:@container ms:group ms:focus-within:border-zinc-500",
+  class: "ms:flex ms:flex-col ms:w-full ms:border ms:border-neutral-300 ms:rounded ms:@container ms:group ms:focus-within:border-neutral-400",
   data: {
-    controller: "marksmith",
+    controller: "marksmith list-continuation",
+    action: "
+      beforeinput->list-continuation#handleBeforeInput
+      input->list-continuation#handleInput
+    ",
     marksmith_preview_url_value: marksmith.markdown_previews_path,
     marksmith_active_tab_class: "bg-white",
     marksmith_attach_url_value: main_app.rails_direct_uploads_url,
     marksmith_extra_preview_params_value: extra_preview_params.as_json,
   } do %>
-  <% toggle_button_classes = class_names(marksmith_button_classes, "ms:border-0 ms:bg-none") %>
-  <div class="ms:flex-1 ms:flex-col-reverse ms:@md:flex-row ms:grow ms:flex  ms:justify-bewteen ms:bg-zinc-50 ms:rounded ms:px-2 ms:py-1 ms:gap-y-1">
+  <% toggle_button_classes = class_names(marksmith_button_classes, "ms:bg-neutral-200 ms:border-0 ms:bg-none ms:text-sm ms:hover:bg-neutral-300 ms:uppercase ms:text-xs ms:font-semibold ms:text-neutral-800") %>
+  <div class="ms:flex-1 ms:flex-col-reverse ms:@md:flex-row ms:grow ms:flex  ms:justify-bewteen ms:bg-neutral-50 ms:rounded ms:px-2 ms:py-1 ms:gap-y-1">
     <div class="ms:flex-1 ms:flex ms:items:center">
-      <button class="<%= toggle_button_classes %>" data-action="click->marksmith#switchToPreview" data-marksmith-target="previewTabButton">
+      <button class="<%= toggle_button_classes %>" data-action="click->marksmith#switchToPreview" data-marksmith-target="previewTabButton" type="button">
         <%= t('marksmith.preview').humanize %>
       </button>
-      <button class="<%= toggle_button_classes %> ms:hidden ms:bg-zinc-200" data-action="click->marksmith#switchToWrite" data-marksmith-target="writeTabButton">
+      <button class="<%= toggle_button_classes %> ms:hidden ms:bg-neutral-200" data-action="click->marksmith#switchToWrite" data-marksmith-target="writeTabButton" type="button">
         <%= t('marksmith.write').humanize %>
       </button>
     </div>
@@ -46,29 +51,39 @@
       <%= marksmith_toolbar_button "task-list" %>
     </markdown-toolbar>
   </div>
-
-  <div class="ms:border-t ms:border-zinc-300 ms:flex">
-    <%= text_area_tag name, value,
-      id: name,
-      class: class_names("ms:flex ms:flex-1 ms:rounded ms:border-none ms:py-2 ms:px-3  ms:focus:outline-none", classes),
-      rows: rows,
-      data: {
-        marksmith_target: "fieldElement",
-        action: "drop->marksmith#dropUpload paste->marksmith#pasteUpload",
-        **data_attributes
-      },
-      disabled:,
-      placeholder:,
-      autofocus:,
-      style:
-    %>
+  <% toolbar_button_classes = "ms:cursor-pointer ms:hover:bg-neutral-100 ms:px-1 ms:py-px ms:rounded ms:text-sm" %>
+  <div class="ms:border-t ms:border-neutral-300 ms:flex">
+    <%= content_tag :div, class: "ms:flex ms:flex-col ms:size-full", data: { marksmith_target: "fieldContainer" } do %>
+      <%= text_area_tag field_name, value,
+        id: name,
+        class: class_names("ms:flex ms:flex-1 ms:rounded ms:border-none ms:p-2 ms:resize-y ms:focus:outline-none ms:font-mono ms:focus:ring-0", classes),
+        rows: rows,
+        data: {
+          action: "drop->marksmith#dropUpload paste->marksmith#pasteUpload",
+          marksmith_target: "fieldElement",
+          **data_attributes
+        },
+        disabled:,
+        placeholder:,
+        autofocus:,
+        style:
+      %>
+      <div class="ms:flex ms:w-full ms:flex-1 ms:flex-grow ms:space-x-2 ms:py-1 ms:border-t ms:border-neutral-300 ms:px-2 ms:font-sans ms:text-sm">
+        <%= link_to "https://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax", target: "_blank", class: class_names("ms:flex ms:items-center ms:gap-x-2 ms:text-neutral-800 ms:no-underline", toolbar_button_classes) do %>
+          <%= image_tag asset_path("marksmith/svgs/markdown.svg"), class: "ms:inline ms:size-4" %> <%= t("marksmith.markdown_is_supported").humanize %>
+        <% end %>
+        <%= button_tag data: { action: "click->marksmith#buttonUpload" }, class: class_names("ms:bg-none ms:border-none ms:bg-transparent ms:text-neutral-600 ms:items-center ms:flex", toolbar_button_classes) do %>
+          <%= image_tag asset_path("marksmith/svgs/paperclip.svg"), class: "ms:inline ms:size-4" %> <%= t("marksmith.attach_files").humanize %>
+        <% end %>
+      </div>
+    <% end %>
     <%= content_tag :div,
-      class: "ms:hidden ms:markdown-preview",
+      class: "ms:hidden ms:markdown-preview ms:size-full ms:flex-1 ms:flex ms:size-full",
       id: "markdown-preview-#{name}",
       data: {
         marksmith_target: "previewElement",
       } do %>
-      <div class="button-spinner">
+      <div class="ms:button-spinner">
         <div class="double-bounce1"></div>
         <div class="double-bounce2"></div>
       </div>

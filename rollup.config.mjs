@@ -17,7 +17,7 @@ const commonOutput = {
   banner
 }
 
-const input = "app/frontend/entrypoints/javascript/controllers/marksmith_controller.js"
+const input = "app/frontend/entrypoints/javascript/controllers/export.js"
 
 const plugins = [resolve()]
 
@@ -26,7 +26,7 @@ export default [
     input,
     output: [
       {
-        file: "dist/marksmith-controller.esm.js",
+        file: "dist/marksmith-core.esm.js",
         ...commonOutput
       }
     ],
@@ -43,7 +43,7 @@ export default [
     input,
     output: [
       {
-        file: "dist/marksmith-full.esm.js",
+        file: "dist/marksmith.esm.js",
         ...commonOutput
       }
     ],

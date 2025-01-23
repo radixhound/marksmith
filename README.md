@@ -50,9 +50,9 @@ npm install @avo-hq/marksmith
 Import and register it in your application.
 
 ```js
-import Marksmith from '@avo-hq/marksmith'
+import { MarksmithController } from '@avo-hq/marksmith'
 
-application.register('marksmith', Marksmith)
+application.register('marksmith', MarksmithController)
 ```
 
 > [!NOTE]
@@ -61,9 +61,9 @@ application.register('marksmith', Marksmith)
 
 ```js
 // Import just the controller
-import Marksmith from '@avo-hq/marksmith/controller'
+import { MarksmithController } from '@avo-hq/marksmith/core'
 
-application.register('marksmith', Marksmith)
+application.register('marksmith', MarksmithController)
 
 // Manually import Marksmith's dependencies
 import '@github/markdown-toolbar-element'
@@ -101,6 +101,20 @@ It supports basic styles for headings, `strong`, `italic` and others.
 ## Active Storage
 
 The field supports Actve Storage uploads using drag and drop and pasting files into the field.
+
+## List continuation
+
+Marksmith has this great opt-in feature where you can have your lists continued.
+We need to add the `ListContinuation` controller too.
+
+```js
+import { ListContinuationController, MarksmithController } from '@avo-hq/marksmith'
+// or /core for the no-dependencies version
+import { ListContinuationController, MarksmithController } from '@avo-hq/marksmith/core'
+
+application.register('marksmith', MarksmithController)
+application.register('list-continuation', ListContinuationController)
+```
 
 ## Contributing
 

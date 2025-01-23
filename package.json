@@ -7,8 +7,8 @@
   "module": "app/assets/builds/marksmith.esm.js",
   "version": "0.0.11",
   "exports": {
-    ".": "./dist/marksmith-full.esm.js",
-    "./controller": "./dist/marksmith-controller.esm.js"
+    ".": "./dist/marksmith.esm.js",
+    "./core": "./dist/marksmith-core.esm.js"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,8 @@
     "access": "public"
   },
   "files": [
-    "dist/marksmith-controller.esm.js",
-    "dist/marksmith-full.esm.js"
+    "dist/marksmith.esm.js",
+    "dist/marksmith-core.esm.js"
   ],
   "devDependencies": {
     "@github/markdown-toolbar-element": "^2.2.3",
