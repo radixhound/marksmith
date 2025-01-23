@@ -926,6 +926,10 @@
   font-size: var(--ms-text-xs);
   line-height: var(--tw-leading, var(--ms-text-xs--line-height));
 }
+.ms\:leading-normal {
+  --tw-leading: var(--ms-leading-normal);
+  line-height: var(--ms-leading-normal);
+}
 .ms\:font-semibold {
   --tw-font-weight: var(--ms-font-weight-semibold);
   font-weight: var(--ms-font-weight-semibold);
@@ -1097,6 +1101,10 @@
   syntax: "*";
   inherits: false;
   initial-value: solid;
+}
+@property --tw-leading {
+  syntax: "*";
+  inherits: false;
 }
 @property --tw-font-weight {
   syntax: "*";
