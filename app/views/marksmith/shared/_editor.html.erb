@@ -15,7 +15,7 @@
   extra_preview_params = local_assigns[:extra_preview_params] || {}
 %>
 <%= content_tag :div,
-  class: "ms:flex ms:flex-col ms:w-full ms:border ms:border-neutral-300 ms:rounded ms:@container ms:group ms:focus-within:border-neutral-400",
+  class: "ms:block ms:flex-col ms:w-full ms:border ms:border-neutral-300 ms:rounded ms:@container ms:focus-within:border-neutral-400",
   data: {
     controller: "marksmith list-continuation",
     action: "
@@ -52,7 +52,7 @@
     </markdown-toolbar>
   </div>
   <% toolbar_button_classes = "ms:cursor-pointer ms:hover:bg-neutral-100 ms:px-1 ms:py-px ms:rounded ms:text-sm" %>
-  <div class="ms:border-t ms:border-neutral-300 ms:flex">
+  <div class="ms:border-t ms:w-full ms:border-neutral-300 ms:flex">
     <%= content_tag :div, class: "ms:flex ms:flex-col ms:size-full", data: { marksmith_target: "fieldContainer" } do %>
       <%= text_area_tag field_name, value,
         id: name,
@@ -68,7 +68,7 @@
         autofocus:,
         style:
       %>
-      <div class="ms:flex ms:w-full ms:flex-1 ms:flex-grow ms:space-x-2 ms:py-1 ms:border-t ms:border-neutral-300 ms:px-2 ms:font-sans ms:text-sm">
+      <div class="ms:flex ms:flex-1 ms:flex-grow ms:space-x-2 ms:py-1 ms:border-t ms:border-neutral-300 ms:px-2 ms:font-sans ms:text-sm">
         <%= link_to "https://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax", target: "_blank", class: class_names("ms:flex ms:items-center ms:gap-x-2 ms:text-neutral-800 ms:no-underline", toolbar_button_classes) do %>
           <%= image_tag asset_path("marksmith/svgs/markdown.svg"), class: "ms:inline ms:size-4" %> <%= t("marksmith.markdown_is_supported").humanize %>
         <% end %>
@@ -89,5 +89,4 @@
       </div>
     <% end %>
   </div>
-</div>
 <% end %>
