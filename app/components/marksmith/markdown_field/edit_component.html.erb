@@ -1,0 +1,8 @@
+<%= field_wrapper **field_wrapper_args, full_width: true do %>
+  <%= @form.marksmith @field.id,
+    extra_preview_params: {
+      resource_class: @resource.class.name,
+      field_id: field.id,
+    }
+  %>
+<% end %>

@@ -19,7 +19,32 @@ module Marksmith
 
     initializer "marksmith.assets.precompile" do |app|
       if Rails.application.config.respond_to?(:assets)
+        # The manifest will expose the asset files to the main app.
         app.config.assets.precompile << "marksmith_manifest.js"
+      end
+    end
+
+    initializer "avo-markdown_field.init" do |app|
+      if defined?(Avo)
+        require "marksmith/fields/markdown_field"
+
+        app.routes.append do
+          mount Marksmith::Engine => "/marksmith"
+        end
+
+        ActiveSupport.on_load(:avo_boot) do
+          Avo.plugin_manager.register :marksmith_field
+
+          Avo.plugin_manager.register_field :markdown, Marksmith::Fields::MarkdownField
+          Avo.plugin_manager.register_field :marksmith, Marksmith::Fields::MarkdownField
+
+          Avo.asset_manager.add_stylesheet "marksmith"
+          Avo.asset_manager.add_javascript "marksmith_controller-no-stimulus.esm"
+          Avo.asset_manager.add_javascript "list_continuation_controller-no-stimulus.esm"
+
+          Avo.asset_manager.register_stimulus_controller "marksmith", "MarksmithController"
+          Avo.asset_manager.register_stimulus_controller "list-continuation", "ListContinuationController"
+        end
       end
     end
   end

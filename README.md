@@ -27,24 +27,16 @@ Or manually install it.
 Add this line to your application's Gemfile:
 
 ```ruby
+# Gemfile
 gem "marksmith"
 ```
-
-And then execute:
-
-```bash
-bundle
-```
-
 
 ### 2. Install the NPM package to import the StimulusJS controller.
 
 Install the package.
 
 ```bash
-yarn add @avo-hq/marksmith
-# or
-npm install @avo-hq/marksmith
+$ yarn add @avo-hq/marksmith
 ```
 
 Import and register it in your application.
@@ -60,16 +52,16 @@ application.register('marksmith', MarksmithController)
 > If you want to manually import those dependencies and import only the controller from the package use the `/controller` path.
 
 ```js
-// Import just the controller
-import { MarksmithController } from '@avo-hq/marksmith/core'
-
-application.register('marksmith', MarksmithController)
-
 // Manually import Marksmith's dependencies
 import '@github/markdown-toolbar-element'
 import { DirectUpload } from '@rails/activestorage'
 import { post } from '@rails/request.js'
 import { subscribe } from '@github/paste-markdown'
+
+// Import just the controller
+import { MarksmithController } from '@avo-hq/marksmith/core'
+
+application.register('marksmith', MarksmithController)
 ```
 
 ### 3. Add the style tag to your `application.html` layout
@@ -80,16 +72,17 @@ import { subscribe } from '@github/paste-markdown'
 
 ### 4. Use it
 
-Use it a simple tag or attach it to your form builder.
+Use a form helper tag or attach it to your form builder.
 
 ```erb
 <%= marksmith_tag :body, value: "### This is important" %>
-<%= @form.marksmith @field.id%>
+or
+<%= @form.marksmith :body %>
 ```
 
 ## Options
 
-The field supports some of the regular options like `disabled`, `placeholder`, `autofocus`, `style`, `class`, `rows`, `data`, and `value`, but also a custom one.
+The field supports a few of the regular options like `disabled`, `placeholder`, `autofocus`, `style`, `class`, `rows`, `data`, and `value`, but also a custom one.
 
 `extra_preview_params` - Sends extra params to the preview renderer.
 
@@ -116,7 +109,7 @@ bin/importmap pin @avo-hq/marksmith
 
 The field supports Actve Storage uploads using drag and drop and pasting files into the field.
 
-## List continuation
+## List Continuation
 
 Marksmith has this great opt-in feature where you can have your lists continued.
 We need to add the `ListContinuation` controller too.
@@ -135,6 +128,7 @@ application.register('list-continuation', ListContinuationController)
 Contribution directions go here.
 
 ## License
+
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Usage in Avo
@@ -151,7 +145,7 @@ Marksmith work wonderfully in Avo throught the default [markdown field](https://
 
 ## Try Avo ⭐️
 
-If you enjoyed this gem try out [Avo](https://github.com/avo-hq/avo). It doubles engineering speed without hiring extra engineers. Teams build Internal Tools, Admin Panels, Content Management Systems, CRMs, and other types of Business Apps 10x faster on top of Ruby on Rails using Avo.
+If you enjoyed this gem try out [Avo](https://github.com/avo-hq/avo). It doubles your engineering speed without hiring extra developers. Teams build Internal Tools, Admin Panels, Content Management Systems, CRMs, and other types of Business Apps 10x faster on top of Ruby on Rails using Avo.
 
 ## Troubleshooting
 

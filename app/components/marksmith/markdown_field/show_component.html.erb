@@ -1,0 +1,3 @@
+<%= field_wrapper **field_wrapper_args, full_width: true do %>
+  <%= render partial: "marksmith/shared/rendered_body", locals: { body: Marksmith::Renderer.new.renderer.render(@field.value) } %>
+<% end %>
