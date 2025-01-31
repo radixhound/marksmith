@@ -19,6 +19,8 @@ class marksmith_controller extends Controller {
     previewUrl: String,
     extraPreviewParams: { type: Object, default: {} },
     fieldId: String,
+    galleryEnabled: { type: Boolean, default: false },
+    galleryOpenPath: String,
   }
 
   static targets = ['fieldContainer', 'fieldElement', 'previewElement', 'writeTabButton', 'previewTabButton', 'toolbar']
@@ -71,14 +73,14 @@ class marksmith_controller extends Controller {
 
   dropUpload(event) {
     event.preventDefault();
-    this.uploadFiles(event.dataTransfer.files);
+    this.#uploadFiles(event.dataTransfer.files);
   }
 
   pasteUpload(event) {
     if (!event.clipboardData.files.length) return
 
     event.preventDefault();
-    this.uploadFiles(event.clipboardData.files);
+    this.#uploadFiles(event.clipboardData.files);
   }
 
   buttonUpload(event) {
@@ -90,40 +92,58 @@ class marksmith_controller extends Controller {
     fileInput.accept = 'image/*,.pdf,.doc,.docx,.txt';
 
     fileInput.addEventListener('change', (e) => {
-      this.uploadFiles(e.target.files);
+      this.#uploadFiles(e.target.files);
     });
 
     fileInput.click();
   }
 
-  uploadFiles(files) {
-    Array.from(files).forEach((file) => this.uploadFile(file));
+  // Invoked by the other controllers (media-library)
+  insertAttachments(attachments, event) {
+    const editorAttachments = attachments.map((attachment) => {
+      const { blob, path, url } = attachment;
+      const link = this.#markdownLinkFromUrl(blob.filename, path, blob.content_type);
+
+      this.#injectLink(link);
+    });
+
+    this.editor?.chain().focus().setAttachment(editorAttachments).run();
   }
 
-  uploadFile(file) {
+  #uploadFiles(files) {
+    Array.from(files).forEach((file) => this.#uploadFile(file));
+  }
+
+  #uploadFile(file) {
     const upload = new DirectUpload(file, this.attachUrlValue);
 
     upload.create((error, blob) => {
       if (error) {
         console.log('Error', error);
       } else {
-        const text = this.markdownLink(blob);
-        const start = this.fieldElementTarget.selectionStart;
-        const end = this.fieldElementTarget.selectionEnd;
-        this.fieldElementTarget.setRangeText(text, start, end);
+        const link = this.#markdownLinkFromUrl(blob.filename, this.#pathFromBlob(blob), blob.content_type);
+        this.#injectLink(link);
       }
     });
   }
 
-  markdownLink(blob) {
-    const { filename } = blob;
-    const url = `/rails/active_storage/blobs/${blob.signed_id}/${filename}`;
-    const prefix = (this.isImage(blob.content_type) ? '!' : '');
+  #injectLink(link) {
+    const start = this.fieldElementTarget.selectionStart;
+    const end = this.fieldElementTarget.selectionEnd;
+    this.fieldElementTarget.setRangeText(link, start, end);
+  }
+
+  #pathFromBlob(blob) {
+    return `/rails/active_storage/blobs/redirect/${blob.signed_id}/${blob.filename}`
+  }
+
+  #markdownLinkFromUrl(filename, url, contentType) {
+    const prefix = (this.#isImage(contentType) ? '!' : '');
 
     return `${prefix}[${filename}](${url})\n`
   }
 
-  isImage(contentType) {
+  #isImage(contentType) {
     return ['image/jpeg', 'image/gif', 'image/png'].includes(contentType)
   }
 }

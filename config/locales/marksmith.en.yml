@@ -30,7 +30,7 @@
 
 en:
   marksmith:
-    attach_files: attach files
+    attach_from_gallery: Attach from gallery
     bold: bold
     code: code
     header: header
@@ -43,4 +43,5 @@ en:
     quote: quote
     task_list: task_list
     unordered_list: unordered list
+    upload_files: upload files
     write: write

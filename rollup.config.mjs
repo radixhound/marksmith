@@ -75,8 +75,6 @@ const avoExports = [
   ...configFor("list_continuation")
 ]
 
-// console.log(avoExports)
-
 export default [
   {
     input,

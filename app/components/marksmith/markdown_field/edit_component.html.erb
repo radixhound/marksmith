@@ -1,5 +1,19 @@
 <%= field_wrapper **field_wrapper_args, full_width: true do %>
   <%= @form.marksmith @field.id,
+    gallery: {
+      enabled: true,
+      open_path: avo.attach_media_path,
+      turbo_frame: ::Avo::MODAL_FRAME_ID,
+      params: {
+        resource_name: @resource.singular_route_key,
+        controller_name: "marksmith",
+        controller_selector: "[data-unique-selector='#{unique_id}']",
+        record_id: @resource&.record&.to_param,
+      }
+    },
+    controller_data_attributes: {
+      unique_selector: unique_id, # it must coincide with the selector above
+    },
     extra_preview_params: {
       resource_class: @resource.class.name,
       field_id: field.id,

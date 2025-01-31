@@ -13,6 +13,17 @@
     local_assigns[:value] || nil
   end
   extra_preview_params = local_assigns[:extra_preview_params] || {}
+
+  # Used by Avo and other adapters to enable the gallery link.
+  gallery_enabled = local_assigns.dig(:gallery, :enabled) || false
+  gallery_open_path = local_assigns.dig(:gallery, :open_path) || nil
+  gallery_params = local_assigns.dig(:gallery, :params) || {}
+  if gallery_open_path.present?
+    gallery_full_path = gallery_open_path + "?" + gallery_params.map { |k,v| "#{k}=#{v}" }.join('&')
+  else
+    gallery_full_path = nil
+  end
+  gallery_turbo_frame = local_assigns.dig(:gallery, :turbo_frame) || nil
 %>
 <%= content_tag :div,
   class: "ms:block ms:flex-col ms:w-full ms:border ms:border-neutral-300 ms:rounded ms:@container ms:focus-within:border-neutral-400",
@@ -22,10 +33,12 @@
       beforeinput->list-continuation#handleBeforeInput
       input->list-continuation#handleInput
     ",
+    unique_selector: ".#{@input_id}", # used to pinpoint the exact element in which to insert the attachment
     marksmith_preview_url_value: marksmith.markdown_previews_path,
     marksmith_active_tab_class: "bg-white",
     marksmith_attach_url_value: main_app.rails_direct_uploads_url,
     marksmith_extra_preview_params_value: extra_preview_params.as_json,
+    **local_assigns.fetch(:controller_data_attributes, {})
   } do %>
   <% toggle_button_classes = class_names(marksmith_button_classes, "ms:bg-neutral-200 ms:border-0 ms:bg-none ms:text-sm ms:hover:bg-neutral-300 ms:uppercase ms:text-xs ms:font-semibold ms:text-neutral-800") %>
   <div class="ms:flex-1 ms:flex-col-reverse ms:@md:flex-row ms:grow ms:flex  ms:justify-bewteen ms:bg-neutral-50 ms:rounded ms:px-2 ms:py-1 ms:gap-y-1">
@@ -69,11 +82,16 @@
         style:
       %>
       <div class="ms:flex ms:flex-1 ms:flex-grow ms:space-x-2 ms:py-1 ms:border-t ms:border-neutral-300 ms:px-2 ms:font-sans ms:text-sm">
-        <%= link_to "https://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax", target: "_blank", class: class_names("ms:flex ms:items-center ms:gap-x-2 ms:text-neutral-800 ms:no-underline", toolbar_button_classes) do %>
-          <%= image_tag asset_path("marksmith/svgs/markdown.svg"), class: "ms:inline ms:size-4" %> <%= t("marksmith.markdown_is_supported").humanize %>
+        <%= link_to "https://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax", target: "_blank", class: class_names("ms:flex ms:items-center ms:text-neutral-800 ms:no-underline", toolbar_button_classes) do %>
+          <%= image_tag asset_path("marksmith/svgs/markdown.svg"), class: "ms:inline ms:size-4 ms:mr-1" %> <%= t("marksmith.markdown_is_supported").humanize %>
         <% end %>
         <%= button_tag data: { action: "click->marksmith#buttonUpload" }, class: class_names("ms:bg-none ms:border-none ms:bg-transparent ms:text-neutral-600 ms:items-center ms:flex", toolbar_button_classes) do %>
-          <%= image_tag asset_path("marksmith/svgs/paperclip.svg"), class: "ms:inline ms:size-4" %> <%= t("marksmith.attach_files").humanize %>
+          <%= image_tag asset_path("marksmith/svgs/paperclip.svg"), class: "ms:inline ms:size-4 ms:mr-1" %> <%= t("marksmith.upload_files").humanize %>
+        <% end %>
+        <% if gallery_enabled %>
+          <%= link_to gallery_full_path, data: { turbo_frame: gallery_turbo_frame }, class: class_names("ms:flex ms:items-center ms:text-neutral-800 ms:no-underline", toolbar_button_classes) do %>
+            <%= image_tag asset_path("marksmith/svgs/gallery.svg"), class: "ms:inline ms:size-4 ms:mr-1" %> <%= t("marksmith.attach_from_gallery").humanize %>
+          <% end %>
         <% end %>
       </div>
     <% end %>

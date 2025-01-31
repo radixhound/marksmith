@@ -1,5 +1,5 @@
-/*! tailwindcss v4.0.0-beta.10 | MIT License | https://tailwindcss.com */
-:root {
+/*! tailwindcss v4.0.1 | MIT License | https://tailwindcss.com */
+:root, :host {
   --ms-font-sans: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', 'Noto Color Emoji';
   --ms-font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
@@ -788,6 +788,9 @@
     margin-bottom: 0;
   }
 }
+.ms\:mr-1 {
+  margin-right: calc(var(--ms-spacing) * 1);
+}
 .ms\:block {
   display: block;
 }
@@ -840,9 +843,6 @@
 }
 .ms\:items-center {
   align-items: center;
-}
-.ms\:gap-x-2 {
-  column-gap: calc(var(--ms-spacing) * 2);
 }
 .ms\:gap-y-1 {
   row-gap: calc(var(--ms-spacing) * 1);
