@@ -107,7 +107,10 @@ bin/importmap pin @avo-hq/marksmith
 
 ## Active Storage
 
-The field supports Actve Storage uploads using drag and drop and pasting files into the field.
+The editor supports [ActiveStorage](https://guides.rubyonrails.org/active_storage_overview.html) uploads using drag and drop and pasting files into the field.
+
+Whe used in Avo it supports injecting assets using the [Media Library feature](http://docs.avohq.io/3.0/media-library.html).
+
 
 ## List Continuation
 
