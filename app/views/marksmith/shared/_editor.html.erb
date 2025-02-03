@@ -13,6 +13,17 @@
     local_assigns[:value] || nil
   end
   extra_preview_params = local_assigns[:extra_preview_params] || {}
+  upload_url = if local_assigns[:upload_url].present?
+    local_assigns[:upload_url]
+  elsif defined?(ActiveStorage)
+    main_app.rails_direct_uploads_url
+  end
+
+  enable_file_uploads = if upload_url.present?
+    local_assigns[:enable_file_uploads] == true
+  else
+    false
+  end
 
   # Used by Avo and other adapters to enable the gallery link.
   gallery_enabled = local_assigns.dig(:gallery, :enabled) || false
@@ -35,8 +46,9 @@
     ",
     unique_selector: ".#{@input_id}", # used to pinpoint the exact element in which to insert the attachment
     marksmith_preview_url_value: marksmith.markdown_previews_path,
+    marksmith_file_uploads_enabled_value: enable_file_uploads,
     marksmith_active_tab_class: "bg-white",
-    marksmith_attach_url_value: main_app.rails_direct_uploads_url,
+    marksmith_attach_url_value: upload_url,
     marksmith_extra_preview_params_value: extra_preview_params.as_json,
     **local_assigns.fetch(:controller_data_attributes, {})
   } do %>
@@ -85,8 +97,10 @@
         <%= link_to "https://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax", target: "_blank", class: class_names("ms:flex ms:items-center ms:text-neutral-800 ms:no-underline", toolbar_button_classes) do %>
           <%= image_tag asset_path("marksmith/svgs/markdown.svg"), class: "ms:inline ms:size-4 ms:mr-1" %> <%= t("marksmith.markdown_is_supported").humanize %>
         <% end %>
-        <%= button_tag data: { action: "click->marksmith#buttonUpload" }, class: class_names("ms:bg-none ms:border-none ms:bg-transparent ms:text-neutral-600 ms:items-center ms:flex", toolbar_button_classes) do %>
-          <%= image_tag asset_path("marksmith/svgs/paperclip.svg"), class: "ms:inline ms:size-4 ms:mr-1" %> <%= t("marksmith.upload_files").humanize %>
+        <% if enable_file_uploads %>
+          <%= button_tag data: { action: "click->marksmith#buttonUpload" }, class: class_names("ms:bg-none ms:border-none ms:bg-transparent ms:text-neutral-600 ms:items-center ms:flex", toolbar_button_classes) do %>
+            <%= image_tag asset_path("marksmith/svgs/paperclip.svg"), class: "ms:inline ms:size-4 ms:mr-1" %> <%= t("marksmith.upload_files").humanize %>
+          <% end %>
         <% end %>
         <% if gallery_enabled %>
           <%= link_to gallery_full_path, data: { turbo_frame: gallery_turbo_frame }, class: class_names("ms:flex ms:items-center ms:text-neutral-800 ms:no-underline", toolbar_button_classes) do %>

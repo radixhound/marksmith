@@ -104,8 +104,18 @@ The field supports a few of the regular options like `disabled`, `placeholder`, 
 
 `extra_preview_params` - Sends extra params to the preview renderer.
 
+`enable_file_uploads` - Whether to enable file uploads.
+
+`upload_url` - The URL to use for file uploads. If not provided, the editor will use the `rails_direct_uploads_url` helper.
+
 ```erb
-<%= marksmith_tag :body, disabled: true, placeholder: "Write your best markdown here.", extra_preview_params: { foo: "bar" } %>
+<%= marksmith_tag :body,
+  disabled: true,
+  placeholder: "Write your best markdown here.",
+  extra_preview_params: { foo: "bar" },
+  enable_file_uploads: true,
+  upload_url: nil
+  %>
 ```
 
 ### Eject configuration file
@@ -148,8 +158,18 @@ It supports basic styles for headings, `strong`, `italic` and others.
 In your `show.html.erb` view or the place where you want to render the compiled markup use the `marksmithed` helper and it will run the content through the renderer.
 
 ```erb
-<%= marksmithed post.body %>
+<%== marksmithed post.body %>
 ```
+
+> [!WARNING]
+> Using the `<%==` tag will output the raw HTML, so ensure you sanitize the content to avoid XSS attacks.
+>
+> See how we do it [here](https://github.com/avo-hq/avo/blob/main/app/views/marksmith/shared/_rendered_body.html.erb#L2).
+> ```ruby
+> # sample sanitization
+> sanitize(body, tags: %w(table th tr td span) + ActionView::Helpers::SanitizeHelper.sanitizer_vendor.safe_list_sanitizer.allowed_tags.to_a)
+> ```
+
 
 ## Active Storage
 

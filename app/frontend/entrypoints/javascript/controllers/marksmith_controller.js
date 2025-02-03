@@ -17,6 +17,7 @@ export default class extends Controller {
     fieldId: String,
     galleryEnabled: { type: Boolean, default: false },
     galleryOpenPath: String,
+    fileUploadsEnabled: { type: Boolean, default: true },
   }
 
   static targets = ['fieldContainer', 'fieldElement', 'previewElement', 'writeTabButton', 'previewTabButton', 'toolbar']
