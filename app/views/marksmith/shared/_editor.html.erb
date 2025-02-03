@@ -26,7 +26,7 @@
   gallery_turbo_frame = local_assigns.dig(:gallery, :turbo_frame) || nil
 %>
 <%= content_tag :div,
-  class: "ms:block ms:flex-col ms:w-full ms:border ms:border-neutral-300 ms:rounded ms:@container ms:focus-within:border-neutral-400",
+  class: "marksmith ms:block ms:flex-col ms:w-full ms:border ms:border-neutral-300 ms:rounded ms:@container ms:focus-within:border-neutral-400",
   data: {
     controller: "marksmith list-continuation",
     action: "
@@ -65,11 +65,11 @@
     </markdown-toolbar>
   </div>
   <% toolbar_button_classes = "ms:cursor-pointer ms:hover:bg-neutral-100 ms:px-1 ms:py-px ms:rounded ms:text-sm" %>
-  <div class="ms:border-t ms:w-full ms:border-neutral-300 ms:flex">
-    <%= content_tag :div, class: "ms:flex ms:flex-col ms:size-full", data: { marksmith_target: "fieldContainer" } do %>
+  <div class="ms:border-t ms:w-full ms:border-neutral-300 ms:flex ms:flex-1">
+    <%= content_tag :div, class: "ms:flex ms:flex-1 ms:flex-col ms:size-full", data: { marksmith_target: "fieldContainer" } do %>
       <%= text_area_tag field_name, value,
         id: name,
-        class: class_names("ms:flex ms:flex-1 ms:rounded ms:border-none ms:p-2 ms:resize-y ms:focus:outline-none ms:font-mono ms:focus:ring-0 ms:leading-normal", classes),
+        class: class_names("ms:flex ms:flex-1 ms:rounded ms:border-none ms:resize-y ms:focus:outline-none ms:font-mono ms:focus:ring-0 ms:leading-normal ms:p-2", classes),
         rows: rows,
         data: {
           action: "drop->marksmith#dropUpload paste->marksmith#pasteUpload",
@@ -81,7 +81,7 @@
         autofocus:,
         style:
       %>
-      <div class="ms:flex ms:flex-1 ms:flex-grow ms:space-x-2 ms:py-1 ms:border-t ms:border-neutral-300 ms:px-2 ms:font-sans ms:text-sm">
+      <div class="ms:flex ms:flex-1 ms:flex-grow ms:space-x-2 ms:py-1 ms:border-t ms:border-neutral-300 ms:px-2 ms:font-sans ms:text-sm ms:p-2">
         <%= link_to "https://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax", target: "_blank", class: class_names("ms:flex ms:items-center ms:text-neutral-800 ms:no-underline", toolbar_button_classes) do %>
           <%= image_tag asset_path("marksmith/svgs/markdown.svg"), class: "ms:inline ms:size-4 ms:mr-1" %> <%= t("marksmith.markdown_is_supported").humanize %>
         <% end %>
@@ -96,7 +96,7 @@
       </div>
     <% end %>
     <%= content_tag :div,
-      class: "ms:hidden ms:markdown-preview ms:size-full ms:flex-1 ms:flex ms:size-full",
+      class: "ms:hidden ms:markdown-preview ms:size-full ms:flex-1 ms:flex ms:size-full ms:p-2 ms:overflow-auto",
       id: "markdown-preview-#{name}",
       data: {
         marksmith_target: "previewElement",

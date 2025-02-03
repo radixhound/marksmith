@@ -1,6 +1,4 @@
 <%= turbo_stream.update params[:element_id] do %>
-  <div class="ms:px-3 ms:py-2">
-    <%= render partial: "marksmith/shared/rendered_body", locals: { body: @body } %>
-  </div>
+  <%= render partial: "marksmith/shared/rendered_body", locals: { body: @body } %>
 <% end %>
 

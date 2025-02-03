@@ -6,7 +6,7 @@ It supports Active Storage attachments and comes with a built-in mardown preview
 
 ![Marksmith logo](./marksmith.png)
 
-[![Marksmith demo](https://github.com/user-attachments/assets/09820413-7b2f-4d9d-a6a5-a9b1d5b90bea)](https://github.com/user-attachments/assets/f257db9d-6bfd-4fbc-ac10-dff1dfc99ff2)
+![Marksmith demo](./marksmith.gif)
 
 ## Usage
 

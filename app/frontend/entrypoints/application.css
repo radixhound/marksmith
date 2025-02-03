@@ -12,6 +12,11 @@
 @source "./../../helpers/";
 @source "./../../../lib/";
 
+.marksmith,
+.marksmith * {
+  box-sizing: border-box;
+}
+
 .ms\:button-spinner {
   width: 24px;
   height: 24px;
