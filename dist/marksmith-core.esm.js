@@ -21,9 +21,14 @@ class marksmith_controller extends Controller {
     fieldId: String,
     galleryEnabled: { type: Boolean, default: false },
     galleryOpenPath: String,
+    fileUploadsEnabled: { type: Boolean, default: true },
   }
 
   static targets = ['fieldContainer', 'fieldElement', 'previewElement', 'writeTabButton', 'previewTabButton', 'toolbar']
+
+  get #fileUploadsDisabled() {
+    return !this.fileUploadsEnabledValue
+  }
 
   connect() {
     subscribe(this.fieldContainerTarget, { defaultPlainTextPaste: { urlLinks: true } });
@@ -72,11 +77,15 @@ class marksmith_controller extends Controller {
   }
 
   dropUpload(event) {
+    if (this.#fileUploadsDisabled) return
+
     event.preventDefault();
     this.#uploadFiles(event.dataTransfer.files);
   }
 
   pasteUpload(event) {
+    if (this.#fileUploadsDisabled) return
+
     if (!event.clipboardData.files.length) return
 
     event.preventDefault();

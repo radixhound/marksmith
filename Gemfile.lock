@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     marksmith (0.1.1)
-      rails (>= 7.0.0)
+      activesupport
       redcarpet
 
 GEM
@@ -305,6 +305,7 @@ DEPENDENCIES
   marksmith!
   propshaft
   puma
+  rails (>= 7.0.0)
   rubocop-rails-omakase
   sqlite3
   stimulus-rails

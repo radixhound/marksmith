@@ -17,3 +17,5 @@ node_modules
 *.local
 
 app/assets/builds
+
+vite.config.ts.timestamp-*.mjs

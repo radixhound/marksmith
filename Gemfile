@@ -3,6 +3,8 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in marksmith.gemspec.
 gemspec
 
+gem "rails", ">= 7.0.0"
+
 gem "puma"
 
 gem "sqlite3"
@@ -18,6 +20,9 @@ gem 'vite_rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
 
+group :development do
+  gem "web-console", ">= 3.3.0"
+end
+
 # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-gem "web-console", ">= 3.3.0"
 gem "listen", ">= 3.5.1"

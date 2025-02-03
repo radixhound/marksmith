@@ -17,6 +17,14 @@ module Marksmith
       end
     end
 
+    initializer "marksmith.routes" do |app|
+      if Marksmith.configuration.automatically_mount_engine
+        app.routes.append do
+          mount Marksmith::Engine => Marksmith.configuration.mount_path
+        end
+      end
+    end
+
     initializer "marksmith.assets.precompile" do |app|
       if Rails.application.config.respond_to?(:assets)
         # The manifest will expose the asset files to the main app.
@@ -24,13 +32,13 @@ module Marksmith
       end
     end
 
+    generators do |app|
+      Rails::Generators.configure! app.config.generators
+    end
+
     initializer "avo-markdown_field.init" do |app|
       if defined?(Avo)
         require "marksmith/fields/markdown_field"
-
-        app.routes.append do
-          mount Marksmith::Engine => "/marksmith"
-        end
 
         ActiveSupport.on_load(:avo_boot) do
           Avo.plugin_manager.register :marksmith_field

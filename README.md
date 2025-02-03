@@ -8,6 +8,9 @@ It supports Active Storage attachments and comes with a built-in mardown preview
 
 ![Marksmith demo](./marksmith.gif)
 
+> [!WARNING]
+> Marksmith is at the initial stage of development. It's nearing a beta release, but the API might change and bugs are expected. Please continue to use the library and report any issues in the GitHub repo.
+
 Temporary live demo here, under the description field: [https://main.avodemo.com/avo/resources/projects/new](https://main.avodemo.com/avo/resources/projects/new)
 
 ## Usage
@@ -18,7 +21,7 @@ Temporary live demo here, under the description field: [https://main.avodemo.com
 
 ## Installation
 
-### 1. Add `marksmith` to your `Gemfile`
+#### 1. Add `marksmith` to your `Gemfile`
 
 Have Bundler add it by running this command:
 
@@ -35,20 +38,27 @@ Add this line to your application's Gemfile:
 gem "marksmith"
 ```
 
-### 2. Install the NPM package to import the StimulusJS controller.
+#### 2. Install the NPM package to import the StimulusJS controller.
 
-Install the package.
+Install the package from npmjs.org.
 
 ```bash
 $ yarn add @avo-hq/marksmith
 ```
 
-Import and register it in your application.
+Or pin it using importmap.
+
+```bash
+bin/importmap pin @avo-hq/marksmith
+```
+
+Import and register the controllers in your application. The `ListContinuationController` is optional and only needed if you want to have continued lists in your markdown.
 
 ```js
-import { MarksmithController } from '@avo-hq/marksmith'
+import { MarksmithController, ListContinuationController } from '@avo-hq/marksmith'
 
 application.register('marksmith', MarksmithController)
+application.register('list-continuation', ListContinuationController)
 ```
 
 > [!NOTE]
@@ -68,27 +78,77 @@ import { MarksmithController } from '@avo-hq/marksmith/core'
 application.register('marksmith', MarksmithController)
 ```
 
-### 3. Add the style tag to your `application.html` layout
+#### 3. Add the style tag to your `application.html` layout
 
 ```erb
 <%= stylesheet_link_tag "marksmith" %>
 ```
 
-### 4. Use it
+#### 4. Use it
 
 Use a form helper tag or attach it to your form builder.
 
 ```erb
 <%= marksmith_tag :body, value: "### This is important" %>
 or
-<%= @form.marksmith :body %>
+<%= form.marksmith :body %>
 ```
 
-## Options
+## Configuration
+
+Marksmith accepts a few configuration options.
+
+### Field options
 
 The field supports a few of the regular options like `disabled`, `placeholder`, `autofocus`, `style`, `class`, `rows`, `data`, and `value`, but also a custom one.
 
 `extra_preview_params` - Sends extra params to the preview renderer.
+
+`enable_file_uploads` - Whether to enable file uploads.
+
+`upload_url` - The URL to use for file uploads. If not provided, the editor will use the `rails_direct_uploads_url` helper.
+
+```erb
+<%= marksmith_tag :body,
+  disabled: true,
+  placeholder: "Write your best markdown here.",
+  extra_preview_params: { foo: "bar" },
+  enable_file_uploads: true,
+  upload_url: nil
+  %>
+```
+
+### Eject configuration file
+
+Marksmith comes with a default configuration file that you can eject to your app.
+
+```bash
+bin/rails generate marksmith:install
+```
+
+This will create a `config/initializers/marksmith.rb` file in your app.
+
+### Mount path
+
+The engine is mounted by default at `/marksmith`. You can change it by setting `Marksmith.configuration.mount_path` to a different path.
+
+```ruby
+# config/initializers/marksmith.rb
+Marksmith.configure do |config|
+  config.mount_path = "/markdown"
+end
+```
+
+### Mounting the engine
+
+The engine is mounted by default, but you can disable it by setting `Marksmith.configuration.automatically_mount_engine` to `false` and then manually mount the engine in your `routes.rb` file.
+
+```ruby
+# config/routes.rb
+Rails.application.routes.draw do
+  mount Marksmith::Engine => Marksmith.configuration.mount_path
+end
+```
 
 ## Built-in preview renderer
 
@@ -101,13 +161,15 @@ In your `show.html.erb` view or the place where you want to render the compiled 
 <%== marksmithed post.body %>
 ```
 
-## Using with importmap
+> [!WARNING]
+> Using the `<%==` tag will output the raw HTML, so ensure you sanitize the content to avoid XSS attacks.
+>
+> See how we do it [here](https://github.com/avo-hq/avo/blob/main/app/views/marksmith/shared/_rendered_body.html.erb#L2).
+> ```ruby
+> # sample sanitization
+> sanitize(body, tags: %w(table th tr td span) + ActionView::Helpers::SanitizeHelper.sanitizer_vendor.safe_list_sanitizer.allowed_tags.to_a)
+> ```
 
-It should be as simple as running this command and have it pinned in your `importmap.rb` file.
-
-```bash
-bin/importmap pin @avo-hq/marksmith
-```
 
 ## Active Storage
 
@@ -129,6 +191,12 @@ import { ListContinuationController, MarksmithController } from '@avo-hq/marksmi
 application.register('marksmith', MarksmithController)
 application.register('list-continuation', ListContinuationController)
 ```
+
+## Who uses Marksmith?
+
+- [Avo](https://avohq.io) - Ruby on Rails Code-Based App Builder Framework
+
+*Open a PR and add your project here*
 
 ## Contributing
 
