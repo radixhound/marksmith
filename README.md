@@ -98,7 +98,7 @@ It supports basic styles for headings, `strong`, `italic` and others.
 In your `show.html.erb` view or the place where you want to render the compiled markup use the `marksmithed` helper and it will run the content through the renderer.
 
 ```erb
-<%= marksmithed post.body %>
+<%== marksmithed post.body %>
 ```
 
 ## Using with importmap
