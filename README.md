@@ -192,6 +192,12 @@ application.register('marksmith', MarksmithController)
 application.register('list-continuation', ListContinuationController)
 ```
 
+## Who uses Marksmith?
+
+- [Avo](https://avohq.io) - Ruby on Rails Code-Based App Builder Framework
+
+*Open a PR and add your project here*
+
 ## Contributing
 
 Contribution directions go here.
