@@ -69,7 +69,7 @@
     <%= content_tag :div, class: "ms:flex ms:flex-1 ms:flex-col ms:size-full", data: { marksmith_target: "fieldContainer" } do %>
       <%= text_area_tag field_name, value,
         id: name,
-        class: class_names("ms:flex ms:flex-1 ms:rounded ms:border-none ms:resize-y ms:focus:outline-none ms:font-mono ms:focus:ring-0 ms:leading-normal ms:p-2", classes),
+        class: class_names("ms:flex ms:flex-1 ms:rounded ms:border-none ms:resize-y ms:focus:outline-none ms:font-mono ms:focus:ring-0 ms:leading-normal ms:p-2 ms:text-sm", classes),
         rows: rows,
         data: {
           action: "drop->marksmith#dropUpload paste->marksmith#pasteUpload",
