@@ -8,6 +8,10 @@ It supports Active Storage attachments and comes with a built-in mardown preview
 
 ![Marksmith demo](./marksmith.gif)
 
+Temporary live demo here, under the description field: [https://main.avodemo.com/avo/resources/projects/new](https://main.avodemo.com/avo/resources/projects/new)
+
+Temporary live demo here, under the description field: [https://main.avodemo.com/avo/resources/projects/new](https://main.avodemo.com/avo/resources/projects/new)
+
 ## Usage
 
 ```erb
