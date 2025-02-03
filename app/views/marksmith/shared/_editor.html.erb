@@ -19,11 +19,14 @@
     main_app.rails_direct_uploads_url
   end
 
-  enable_file_uploads = if upload_url.present?
-    local_assigns[:enable_file_uploads] == true
-  else
-    false
-  end
+  enable_file_uploads = if upload_url.blank?
+      false
+    elsif local_assigns[:enable_file_uploads].nil?
+      true
+    else
+      local_assigns[:enable_file_uploads]
+    end
+
 
   # Used by Avo and other adapters to enable the gallery link.
   gallery_enabled = local_assigns.dig(:gallery, :enabled) || false

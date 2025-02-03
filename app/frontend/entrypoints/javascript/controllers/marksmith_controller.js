@@ -22,6 +22,10 @@ export default class extends Controller {
 
   static targets = ['fieldContainer', 'fieldElement', 'previewElement', 'writeTabButton', 'previewTabButton', 'toolbar']
 
+  get #fileUploadsDisabled() {
+    return !this.fileUploadsEnabledValue
+  }
+
   connect() {
     subscribe(this.fieldContainerTarget, { defaultPlainTextPaste: { urlLinks: true } })
   }
@@ -69,11 +73,15 @@ export default class extends Controller {
   }
 
   dropUpload(event) {
+    if (this.#fileUploadsDisabled) return
+
     event.preventDefault()
     this.#uploadFiles(event.dataTransfer.files)
   }
 
   pasteUpload(event) {
+    if (this.#fileUploadsDisabled) return
+
     if (!event.clipboardData.files.length) return
 
     event.preventDefault()
