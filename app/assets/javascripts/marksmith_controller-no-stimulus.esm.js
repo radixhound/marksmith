@@ -1,5 +1,5 @@
 /*!
-Marksmith 0.0.16
+Marksmith 0.1.0
 */
 var MarksmithController = (function (stimulus) {
     'use strict';

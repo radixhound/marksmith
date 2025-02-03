@@ -854,6 +854,9 @@
     margin-inline-end: calc(calc(var(--ms-spacing) * 2) * calc(1 - var(--tw-space-x-reverse)));
   }
 }
+.ms\:overflow-auto {
+  overflow: auto;
+}
 .ms\:rounded {
   border-radius: 0.25rem;
 }
@@ -900,14 +903,8 @@
 .ms\:px-2 {
   padding-inline: calc(var(--ms-spacing) * 2);
 }
-.ms\:px-3 {
-  padding-inline: calc(var(--ms-spacing) * 3);
-}
 .ms\:py-1 {
   padding-block: calc(var(--ms-spacing) * 1);
-}
-.ms\:py-2 {
-  padding-block: calc(var(--ms-spacing) * 2);
 }
 .ms\:py-px {
   padding-block: 1px;
@@ -1026,6 +1023,9 @@
   @container (width >= 28rem) {
     flex-direction: row;
   }
+}
+.marksmith, .marksmith * {
+  box-sizing: border-box;
 }
 .ms\:button-spinner {
   width: 24px;
