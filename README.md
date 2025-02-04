@@ -1,5 +1,7 @@
 # Marksmith
 
+[![CI](https://github.com/avo-hq/marksmith/actions/workflows/ci.yml/badge.svg)](https://github.com/avo-hq/marksmith/actions/workflows/ci.yml)
+
 Marksmith is a GitHub-style markdown editor for Rails apps.
 
 It supports Active Storage attachments and comes with a built-in mardown preview renderer.
