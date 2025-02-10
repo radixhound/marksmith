@@ -172,6 +172,35 @@ In your `show.html.erb` view or the place where you want to render the compiled 
 > sanitize(body, tags: %w(table th tr td span) + ActionView::Helpers::SanitizeHelper.sanitizer_vendor.safe_list_sanitizer.allowed_tags.to_a)
 > ```
 
+### Customize the renderer
+
+You can customize the renderer by overriding the `Marksmith::Renderer` model.
+
+```ruby
+# app/models/marksmith/renderer.rb
+require "redcarpet"
+
+module Marksmith
+  class Renderer
+    def renderer
+      ::Redcarpet::Markdown.new(
+        ::Redcarpet::Render::HTML,
+        tables: true,
+        lax_spacing: true,
+        fenced_code_blocks: true,
+        space_after_headers: true,
+        hard_wrap: true,
+        autolink: true,
+        strikethrough: true,
+        underline: true,
+        highlight: true,
+        quote: true,
+        with_toc_data: true
+      )
+    end
+  end
+end
+```
 
 ## Active Storage
 
