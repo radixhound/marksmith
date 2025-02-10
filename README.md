@@ -4,7 +4,7 @@
 
 Marksmith is a GitHub-style markdown editor for Rails apps.
 
-It supports Active Storage attachments and comes with a built-in mardown preview renderer.
+It supports Active Storage attachments and comes with a built-in markdown preview renderer.
 
 ![Marksmith logo](./marksmith.png)
 
