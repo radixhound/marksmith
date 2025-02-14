@@ -4,7 +4,6 @@ PATH
     marksmith (0.1.2)
       activesupport
       redcarpet
-      zeitwerk
 
 GEM
   remote: https://rubygems.org/
