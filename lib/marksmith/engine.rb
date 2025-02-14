@@ -53,6 +53,11 @@ module Marksmith
           Avo.asset_manager.register_stimulus_controller "marksmith", "MarksmithController"
           Avo.asset_manager.register_stimulus_controller "list-continuation", "ListContinuationController"
         end
+      else
+        # Ignore the markdown_field components if Avo is not defined
+        app.autoloaders.main.ignore(
+          root.join("app", "components", "marksmith", "markdown_field"),
+        )
       end
     end
   end

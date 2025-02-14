@@ -1,4 +1,5 @@
 # frozen_string_literal: true
-
-class Marksmith::MarkdownField::ShowComponent < Avo::Fields::ShowComponent
+if defined?(Avo)
+  class Marksmith::MarkdownField::ShowComponent < Avo::Fields::ShowComponent
+  end
 end
