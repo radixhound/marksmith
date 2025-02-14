@@ -1,8 +1,22 @@
-require "redcarpet"
-
 module Marksmith
   class Renderer
-    def renderer
+    def initialize(body:)
+      @body = body
+    end
+
+    def render
+      if Marksmith.configuration.parser == "commonmarker"
+        render_commonmarker
+      else
+        render_redcarpet
+      end
+    end
+
+    def render_commonmarker
+      Commonmarker.to_html(@body)
+    end
+
+    def render_redcarpet
       ::Redcarpet::Markdown.new(
         ::Redcarpet::Render::HTML,
         tables: true,

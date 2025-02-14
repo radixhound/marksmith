@@ -19,5 +19,4 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "activesupport"
-  spec.add_dependency "redcarpet"
 end
