@@ -26,4 +26,4 @@ end
 
 # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
 gem "listen", ">= 3.5.1"
-gem "avo", ">= 3.2.1"
+# gem "avo", ">= 3.2.1"
