@@ -139,7 +139,7 @@ export default class extends Controller {
   }
 
   #pathFromBlob(blob) {
-    return `/rails/active_storage/blobs/redirect/${blob.signed_id}/${blob.filename}`
+    return `/rails/active_storage/blobs/redirect/${blob.signed_id}/${encodeURIComponent(blob.filename)}`
   }
 
   #markdownLinkFromUrl(filename, url, contentType) {
