@@ -28,7 +28,7 @@ Temporary live demo here, under the description field: [https://main.avodemo.com
 Have Bundler add it by running this command:
 
 ```bash
-bundle add marksmith
+bundle add marksmith commonmarker
 ```
 
 Or manually install it.
@@ -38,6 +38,8 @@ Add this line to your application's Gemfile:
 ```ruby
 # Gemfile
 gem "marksmith"
+# Add a markdown parser
+gem "commonmarker"
 ```
 
 #### 2. Install the NPM package to import the StimulusJS controller.
