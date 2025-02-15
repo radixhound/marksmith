@@ -1,5 +1,5 @@
 /*!
-Marksmith 0.2.0
+Marksmith 0.2.1
 */
 var __classPrivateFieldGet = (undefined && undefined.__classPrivateFieldGet) || function (receiver, state, kind, f) {
     if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
@@ -2946,7 +2946,7 @@ class marksmith_controller extends Controller {
   }
 
   #pathFromBlob(blob) {
-    return `/rails/active_storage/blobs/redirect/${blob.signed_id}/${blob.filename}`
+    return `/rails/active_storage/blobs/redirect/${blob.signed_id}/${encodeURIComponent(blob.filename)}`
   }
 
   #markdownLinkFromUrl(filename, url, contentType) {

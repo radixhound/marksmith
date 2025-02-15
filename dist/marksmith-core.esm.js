@@ -1,5 +1,5 @@
 /*!
-Marksmith 0.2.0
+Marksmith 0.2.1
 */
 import '@github/markdown-toolbar-element';
 import { Controller } from '@hotwired/stimulus';
@@ -143,7 +143,7 @@ class marksmith_controller extends Controller {
   }
 
   #pathFromBlob(blob) {
-    return `/rails/active_storage/blobs/redirect/${blob.signed_id}/${blob.filename}`
+    return `/rails/active_storage/blobs/redirect/${blob.signed_id}/${encodeURIComponent(blob.filename)}`
   }
 
   #markdownLinkFromUrl(filename, url, contentType) {

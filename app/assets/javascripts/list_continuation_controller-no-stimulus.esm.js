@@ -1,5 +1,5 @@
 /*!
-Marksmith 0.2.0
+Marksmith 0.2.1
 */
 var ListContinuationController = (function (stimulus) {
   'use strict';

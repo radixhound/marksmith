@@ -1,5 +1,5 @@
 /*!
-Marksmith 0.2.0
+Marksmith 0.2.1
 */
 var MarksmithController = (function (stimulus) {
     'use strict';
@@ -2459,7 +2459,7 @@ var MarksmithController = (function (stimulus) {
       }
 
       #pathFromBlob(blob) {
-        return `/rails/active_storage/blobs/redirect/${blob.signed_id}/${blob.filename}`
+        return `/rails/active_storage/blobs/redirect/${blob.signed_id}/${encodeURIComponent(blob.filename)}`
       }
 
       #markdownLinkFromUrl(filename, url, contentType) {
