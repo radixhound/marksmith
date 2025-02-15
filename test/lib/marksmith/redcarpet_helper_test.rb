@@ -1,8 +1,12 @@
 require "test_helper"
 require "marksmith/helper"
 
-class HelperTest < ActiveSupport::TestCase
+class RedcarpetHelperTest < ActiveSupport::TestCase
   include Marksmith::Helper
+
+  def setup
+    Marksmith.configuration.parser = "redcarpet"
+  end
 
   test "marksmithed#renders simple markdown" do
     body = "# Hello World\n\nThis is a test."

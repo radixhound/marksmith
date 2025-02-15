@@ -30,3 +30,5 @@ gem "listen", ">= 3.5.1"
 
 gem "commonmarker"
 gem "redcarpet"
+
+gem "minitest-difftastic", "~> 0.2.1", :group => :test

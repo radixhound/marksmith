@@ -13,7 +13,9 @@ module Marksmith
     end
 
     def render_commonmarker
-      Commonmarker.to_html(@body)
+      # commonmarker expects an utf-8 encoded string
+      body = @body.to_s.dup.force_encoding('utf-8')
+      Commonmarker.to_html(body)
     end
 
     def render_redcarpet
@@ -30,7 +32,7 @@ module Marksmith
         highlight: true,
         quote: true,
         with_toc_data: true
-      )
+      ).render(@body)
     end
   end
 end
