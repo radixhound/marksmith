@@ -172,14 +172,23 @@ In your `show.html.erb` view or the place where you want to render the compiled 
 > sanitize(body, tags: %w(table th tr td span) + ActionView::Helpers::SanitizeHelper.sanitizer_vendor.safe_list_sanitizer.allowed_tags.to_a)
 > ```
 
-### Customize the renderer
+## Customize the renderer
 
-You can customize the renderer by overriding the `Marksmith::Renderer` model.
+Marksmith comes with a default renderer that uses `Commonmarker` by default but it can be changed to `Redcarpet` in the configuration.
+
+```ruby
+# config/initializers/marksmith.rb
+Marksmith.configure do |config|
+  config.parser = "redcarpet"
+end
+```
+
+### Add your own renderer
+
+You can completely customize the renderer by overriding the `Marksmith::Renderer` model.
 
 ```ruby
 # app/models/marksmith/renderer.rb
-require "redcarpet"
-
 module Marksmith
   class Renderer
     def initialize(body:)
