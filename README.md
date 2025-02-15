@@ -154,8 +154,8 @@ end
 
 ## Built-in preview renderer
 
-The renderer is powered by [`Redcarpet`](https://github.com/vmg/redcarpet).
-It supports basic styles for headings, `strong`, `italic` and others.
+The renderer is powered by [`Commonmarker`](https://github.com/gjtorikian/commonmarker) by default but it can be changed to [`Redcarpet`](https://github.com/vmg/redcarpet) in the configuration or add your own logic by customizing the `Marksmith::Renderer` model.
+It supports basic styles like headings, `strong`, `italic` and others.
 
 In your `show.html.erb` view or the place where you want to render the compiled markup use the `marksmithed` helper and it will run the content through the renderer.
 
