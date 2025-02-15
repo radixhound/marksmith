@@ -154,8 +154,8 @@ end
 
 ## Built-in preview renderer
 
-The renderer is powered by [`Redcarpet`](https://github.com/vmg/redcarpet).
-It supports basic styles for headings, `strong`, `italic` and others.
+The renderer is powered by [`Commonmarker`](https://github.com/gjtorikian/commonmarker) by default but it can be changed to [`Redcarpet`](https://github.com/vmg/redcarpet) in the configuration or add your own logic by customizing the `Marksmith::Renderer` model.
+It supports basic styles like headings, `strong`, `italic` and others.
 
 In your `show.html.erb` view or the place where you want to render the compiled markup use the `marksmithed` helper and it will run the content through the renderer.
 
@@ -172,31 +172,31 @@ In your `show.html.erb` view or the place where you want to render the compiled 
 > sanitize(body, tags: %w(table th tr td span) + ActionView::Helpers::SanitizeHelper.sanitizer_vendor.safe_list_sanitizer.allowed_tags.to_a)
 > ```
 
-### Customize the renderer
+## Customize the renderer
 
-You can customize the renderer by overriding the `Marksmith::Renderer` model.
+Marksmith comes with a default renderer that uses `Commonmarker` by default but it can be changed to `Redcarpet` in the configuration.
+
+```ruby
+# config/initializers/marksmith.rb
+Marksmith.configure do |config|
+  config.parser = "redcarpet"
+end
+```
+
+### Add your own renderer
+
+You can completely customize the renderer by overriding the `Marksmith::Renderer` model.
 
 ```ruby
 # app/models/marksmith/renderer.rb
-require "redcarpet"
-
 module Marksmith
   class Renderer
-    def renderer
-      ::Redcarpet::Markdown.new(
-        ::Redcarpet::Render::HTML,
-        tables: true,
-        lax_spacing: true,
-        fenced_code_blocks: true,
-        space_after_headers: true,
-        hard_wrap: true,
-        autolink: true,
-        strikethrough: true,
-        underline: true,
-        highlight: true,
-        quote: true,
-        with_toc_data: true
-      )
+    def initialize(body:)
+      @body = body
+    end
+
+    def render
+      # Your custom renderer logic here
     end
   end
 end

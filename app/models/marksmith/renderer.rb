@@ -1,8 +1,24 @@
-require "redcarpet"
-
 module Marksmith
   class Renderer
-    def renderer
+    def initialize(body:)
+      @body = body
+    end
+
+    def render
+      if Marksmith.configuration.parser == "commonmarker"
+        render_commonmarker
+      else
+        render_redcarpet
+      end
+    end
+
+    def render_commonmarker
+      # commonmarker expects an utf-8 encoded string
+      body = @body.to_s.dup.force_encoding('utf-8')
+      Commonmarker.to_html(body)
+    end
+
+    def render_redcarpet
       ::Redcarpet::Markdown.new(
         ::Redcarpet::Render::HTML,
         tables: true,
@@ -16,7 +32,7 @@ module Marksmith
         highlight: true,
         quote: true,
         with_toc_data: true
-      )
+      ).render(@body)
     end
   end
 end

@@ -1,7 +1,7 @@
 module Marksmith
   module Helper
     def marksmithed(body)
-      Marksmith::Renderer.new.renderer.render(body)
+      Marksmith::Renderer.new(body:).render
     end
 
     def marksmith_tag(name, **kwargs, &block)

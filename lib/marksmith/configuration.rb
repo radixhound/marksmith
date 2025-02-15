@@ -4,6 +4,7 @@ module Marksmith
 
     config_accessor(:automatically_mount_engine) { true }
     config_accessor(:mount_path) { "/marksmith" }
+    config_accessor(:parser) { "commonmarker" }
   end
 
   def self.configuration
