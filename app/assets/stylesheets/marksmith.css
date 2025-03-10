@@ -803,6 +803,9 @@
 .ms\:inline {
   display: inline;
 }
+.ms\:field-sizing-content {
+  field-sizing: content;
+}
 .ms\:size-4 {
   width: calc(var(--ms-spacing) * 4);
   height: calc(var(--ms-spacing) * 4);
@@ -810,6 +813,9 @@
 .ms\:size-full {
   width: 100%;
   height: 100%;
+}
+.ms\:min-h-60 {
+  min-height: calc(var(--ms-spacing) * 60);
 }
 .ms\:w-full {
   width: 100%;
