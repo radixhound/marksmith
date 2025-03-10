@@ -2,8 +2,7 @@
 <%= content_tag :div, class: "ms:flex ms:flex-1 ms:flex-col ms:size-full", data: { marksmith_target: "fieldContainer" } do %>
   <%= text_area_tag editor.field_name, editor.value,
     id: editor.name,
-    class: class_names("ms:flex ms:flex-1 ms:rounded ms:border-none ms:resize-none ms:focus:outline-none ms:font-mono ms:focus:ring-0 ms:leading-normal ms:p-2 ms:text-sm", editor.classes),
-    rows: editor.rows,
+    class: class_names("ms:flex ms:flex-1 ms:rounded ms:border-none ms:resize-none ms:focus:outline-none ms:font-mono ms:focus:ring-0 ms:leading-normal ms:p-2 ms:text-sm ms:field-sizing-content ms:min-h-60", editor.classes),
     data: {
       action: "drop->marksmith#dropUpload paste->marksmith#pasteUpload",
       marksmith_target: "fieldElement",

@@ -2,23 +2,35 @@ require "uri"
 
 class Marksmith::Editor
   attr_reader :name,
-    :args,
-    :disabled,
-    :controller_data_attributes,
-    :classes,
-    :rows,
-    :data_attributes,
-    :form,
-    :extra_preview_params,
-    :data_attributes,
-    :placeholder,
-    :autofocus,
-    :style,
-    :gallery
+  :extra_preview_params,
+  :form,
+  :disabled,
+  :controller_data_attributes,
+  :classes,
+  :data_attributes,
+  :placeholder,
+  :autofocus,
+  :style,
+  :gallery,
+  :kwargs
 
-  def initialize(name:, upload_url: nil, rails_direct_uploads_url: nil, enable_file_uploads: nil, extra_preview_params: {}, form: nil, disabled: false, controller_data_attributes: {}, classes: nil, rows: 15, data_attributes: {}, placeholder: nil, autofocus: false, style: nil, gallery: {}, **kwargs)
+  def initialize(name:,
+    upload_url: nil,
+    rails_direct_uploads_url: nil,
+    enable_file_uploads: nil,
+    extra_preview_params: {},
+    form: nil,
+    disabled: false,
+    controller_data_attributes: {},
+    classes: nil,
+    data_attributes: {},
+    placeholder: nil,
+    autofocus: false,
+    style: nil,
+    gallery: {},
+    **kwargs)
     @name = name
-    @args = kwargs
+    @kwargs = kwargs
 
     @upload_url = upload_url
     @rails_direct_uploads_url = rails_direct_uploads_url
@@ -28,7 +40,6 @@ class Marksmith::Editor
     @disabled = disabled
     @controller_data_attributes = controller_data_attributes
     @classes = classes
-    @rows = rows
     @data_attributes = data_attributes
     @placeholder = placeholder
     @autofocus = autofocus
