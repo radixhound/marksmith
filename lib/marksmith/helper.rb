@@ -5,7 +5,13 @@ module Marksmith
     end
 
     def marksmith_tag(name, **kwargs, &block)
-      render partial: "marksmith/shared/editor", locals: { name: name, **kwargs }
+      rails_direct_uploads_url = if defined?(ActiveStorage)
+        main_app.rails_direct_uploads_url
+      end
+
+      editor = Marksmith::Editor.new(name:, rails_direct_uploads_url:, **kwargs, &block)
+
+      render partial: "marksmith/shared/editor", locals: { name: editor.name, editor: }
     end
 
     def marksmith_asset_tags(*args, **kwargs)

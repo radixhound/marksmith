@@ -1,44 +1,3 @@
-<%
-  data_attributes = local_assigns[:data] || {}
-  disabled = local_assigns[:disabled] || false
-  placeholder = local_assigns[:placeholder] || nil
-  autofocus = local_assigns[:autofocus] || false
-  style = local_assigns[:style] || nil
-  classes = local_assigns[:class] || nil
-  rows = local_assigns[:rows] || 15
-  field_name = form&.field_name(name) || name
-  value = if defined?(form)
-    form.object.send(name)
-  else
-    local_assigns[:value] || nil
-  end
-  extra_preview_params = local_assigns[:extra_preview_params] || {}
-  upload_url = if local_assigns[:upload_url].present?
-    local_assigns[:upload_url]
-  elsif defined?(ActiveStorage)
-    main_app.rails_direct_uploads_url
-  end
-
-  enable_file_uploads = if upload_url.blank?
-      false
-    elsif local_assigns[:enable_file_uploads].nil?
-      true
-    else
-      local_assigns[:enable_file_uploads]
-    end
-
-
-  # Used by Avo and other adapters to enable the gallery link.
-  gallery_enabled = local_assigns.dig(:gallery, :enabled) || false
-  gallery_open_path = local_assigns.dig(:gallery, :open_path) || nil
-  gallery_params = local_assigns.dig(:gallery, :params) || {}
-  if gallery_open_path.present?
-    gallery_full_path = gallery_open_path + "?" + gallery_params.map { |k,v| "#{k}=#{v}" }.join('&')
-  else
-    gallery_full_path = nil
-  end
-  gallery_turbo_frame = local_assigns.dig(:gallery, :turbo_frame) || nil
-%>
 <%= content_tag :div,
   class: "marksmith ms:block ms:flex-col ms:w-full ms:border ms:border-neutral-300 ms:rounded ms:@container ms:focus-within:border-neutral-400",
   data: {
@@ -49,15 +8,15 @@
     ",
     unique_selector: ".#{@input_id}", # used to pinpoint the exact element in which to insert the attachment
     marksmith_preview_url_value: marksmith.markdown_previews_path,
-    marksmith_file_uploads_enabled_value: enable_file_uploads,
+    marksmith_file_uploads_enabled_value: editor.enable_file_uploads,
     marksmith_active_tab_class: "bg-white",
-    marksmith_attach_url_value: upload_url,
-    marksmith_extra_preview_params_value: extra_preview_params.as_json,
-    **local_assigns.fetch(:controller_data_attributes, {})
+    marksmith_attach_url_value: editor.upload_url,
+    marksmith_extra_preview_params_value: editor.extra_preview_params.as_json,
+    **editor.controller_data_attributes,
   } do %>
-  <%= render partial: "marksmith/shared/toolbar", locals: { name:, disabled: } %>
+  <%= render partial: "marksmith/shared/toolbar", locals: { name: editor.name, disabled: editor.disabled } %>
   <div class="ms:border-t ms:w-full ms:border-neutral-300 ms:flex ms:flex-1">
-    <%= render partial: "marksmith/shared/editor_pane", locals: { name:, field_name:, value:, classes:, rows:, data_attributes:, disabled:, placeholder:, autofocus:, style:, enable_file_uploads:, gallery_enabled:, gallery_full_path:, gallery_turbo_frame: } %>
-    <%= render partial: "marksmith/shared/preview_pane", locals: { name: } %>
+    <%= render partial: "marksmith/shared/editor_pane", locals: { editor: } %>
+    <%= render partial: "marksmith/shared/preview_pane", locals: { name: editor.name } %>
   </div>
 <% end %>
