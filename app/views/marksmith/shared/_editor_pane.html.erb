@@ -24,7 +24,7 @@
       <% end %>
     <% end %>
     <% if editor.gallery_enabled %>
-      <%= link_to gallery_full_path, data: { turbo_frame: gallery_turbo_frame }, class: class_names("ms:flex ms:items-center ms:text-neutral-800 ms:no-underline", toolbar_button_classes) do %>
+      <%= link_to editor.gallery_full_path, data: { turbo_frame: editor.gallery_turbo_frame }, class: class_names("ms:flex ms:items-center ms:text-neutral-800 ms:no-underline", toolbar_button_classes) do %>
         <%= image_tag asset_path("marksmith/svgs/gallery.svg"), class: "ms:inline ms:size-4 ms:mr-1" %> <%= t("marksmith.attach_from_gallery").humanize %>
       <% end %>
     <% end %>
