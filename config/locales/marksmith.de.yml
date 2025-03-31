@@ -1,0 +1,17 @@
+de:
+  marksmith:
+    attach_from_gallery: Aus Galerie hinzufügen
+    bold: Fett
+    code: Code
+    header: Überschrift
+    image: Bild
+    italic: Kursiv
+    link: Link
+    markdown_is_supported: Markdown wird unterstützt
+    ordered_list: Nummerierte Liste
+    preview: Voransicht
+    quote: Zitat
+    task_list: TODO Liste
+    unordered_list: Liste
+    upload_files: Dateien uploaden
+    write: Schreiben
