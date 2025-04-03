@@ -1,8 +1,7 @@
 require "test_helper"
-require "marksmith/helper"
 
 class RedcarpetHelperTest < ActiveSupport::TestCase
-  include Marksmith::Helper
+  include Marksmith::MarksmithHelper
 
   def setup
     Marksmith.configuration.parser = "redcarpet"
