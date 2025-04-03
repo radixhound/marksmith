@@ -8,9 +8,14 @@
 
 @plugin "@tailwindcss/typography";
 
+@source "./../../assets/images/marksmith/svgs/";
 @source "./../../views/";
+@source "./javascript/controllers/";
+@source "./../../../test/dummy/app/views/";
 @source "./../../helpers/";
 @source "./../../../lib/";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 .marksmith,
 .marksmith * {
