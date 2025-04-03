@@ -33,7 +33,7 @@ module Marksmith
     def marksmith_tab_classes
       class_names(
         # marksmith_button_classes,
-        "marksmith-toggle-button ms:text-sm ms:hover:bg-neutral-300 ms:uppercase ms:text-xs ms:font-semibold ms:cursor-pointer ms:text-neutral-400",
+        "marksmith-toggle-button ms:text-sm ms:hover:bg-neutral-300 ms:uppercase ms:text-xs ms:font-semibold ms:cursor-pointer ms:text-neutral-400 ms:px-3",
         # borders
         "ms:bg-transparent ms:hover:bg-transparent",
         "ms:-my-px ms:-ml-px ms:border ms:border-transparent",
