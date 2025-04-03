@@ -225,6 +225,16 @@ application.register('marksmith', MarksmithController)
 application.register('list-continuation', ListContinuationController)
 ```
 
+## Dark mode
+
+Marksmith comes with dark mode built in using the `.dark` class on the `html` element strategy.
+
+```html
+<html class="dark">
+...
+</html>
+```
+
 ## Who uses Marksmith?
 
 - [Avo](https://avohq.io) - Ruby on Rails Code-Based App Builder Framework
