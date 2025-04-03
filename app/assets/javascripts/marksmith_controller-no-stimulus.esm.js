@@ -2370,6 +2370,11 @@ var MarksmithController = (function (stimulus) {
       switchToPreview(event) {
         event.preventDefault();
 
+        // unfocus the active element to hide the outline around the editor
+        this.element.focus();
+        this.element.blur();
+        document.activeElement.blur();
+
         post(this.previewUrlValue, {
           body: {
             body: this.fieldElementTarget.value,
