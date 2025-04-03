@@ -168,7 +168,7 @@ In your `show.html.erb` view or the place where you want to render the compiled 
 > [!WARNING]
 > Using the `<%==` tag will output the raw HTML, so ensure you sanitize the content to avoid XSS attacks.
 >
-> See how we do it [here](https://github.com/avo-hq/avo/blob/main/app/views/marksmith/shared/_rendered_body.html.erb#L2).
+> See how we do it [here](app/views/marksmith/shared/_rendered_body.html.erb#L2).
 > ```ruby
 > # sample sanitization
 > sanitize(body, tags: %w(table th tr td span) + ActionView::Helpers::SanitizeHelper.sanitizer_vendor.safe_list_sanitizer.allowed_tags.to_a)
