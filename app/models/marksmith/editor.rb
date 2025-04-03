@@ -12,7 +12,8 @@ class Marksmith::Editor
     :autofocus,
     :style,
     :gallery,
-    :kwargs
+    :kwargs,
+    :id
 
   def initialize(name:,
     upload_url: nil,
@@ -28,6 +29,7 @@ class Marksmith::Editor
     autofocus: false,
     style: nil,
     value: nil,
+    id: "marksmith-instance-#{rand(1000..9999)}",
     gallery: {},
     **kwargs)
     @name = name
@@ -46,6 +48,7 @@ class Marksmith::Editor
     @autofocus = autofocus
     @style = style
     @value = value
+    @id = id
     @gallery = gallery
   end
 
