@@ -2,17 +2,17 @@ require "uri"
 
 class Marksmith::Editor
   attr_reader :name,
-  :extra_preview_params,
-  :form,
-  :disabled,
-  :controller_data_attributes,
-  :classes,
-  :data_attributes,
-  :placeholder,
-  :autofocus,
-  :style,
-  :gallery,
-  :kwargs
+    :extra_preview_params,
+    :form,
+    :disabled,
+    :controller_data_attributes,
+    :classes,
+    :data_attributes,
+    :placeholder,
+    :autofocus,
+    :style,
+    :gallery,
+    :kwargs
 
   def initialize(name:,
     upload_url: nil,
@@ -27,6 +27,7 @@ class Marksmith::Editor
     placeholder: nil,
     autofocus: false,
     style: nil,
+    value: nil,
     gallery: {},
     **kwargs)
     @name = name
@@ -44,6 +45,7 @@ class Marksmith::Editor
     @placeholder = placeholder
     @autofocus = autofocus
     @style = style
+    @value = value
     @gallery = gallery
   end
 
@@ -94,10 +96,6 @@ class Marksmith::Editor
   end
 
   def value
-    if defined?(form)
-      form&.object&.send(name)
-    else
-      @value || nil
-    end
+    form&.object&.send(name) || @value || nil
   end
 end
