@@ -24,7 +24,9 @@ class marksmith_controller extends Controller {
     fileUploadsEnabled: { type: Boolean, default: true },
   }
 
-  static targets = ['fieldContainer', 'fieldElement', 'previewElement', 'writeTabButton', 'previewTabButton', 'toolbar']
+  static targets = ['fieldContainer', 'fieldElement', 'previewPane', 'writeTabButton', 'previewTabButton', 'toolbar']
+
+  activeTabClass = "active"
 
   get #fileUploadsDisabled() {
     return !this.fileUploadsEnabledValue
@@ -38,15 +40,15 @@ class marksmith_controller extends Controller {
     event.preventDefault();
 
     // toggle buttons
-    this.writeTabButtonTarget.classList.add('ms:hidden');
-    this.previewTabButtonTarget.classList.remove('ms:hidden');
+    this.writeTabButtonTarget.classList.add(this.activeTabClass);
+    this.previewTabButtonTarget.classList.remove(this.activeTabClass);
 
     // toggle write/preview buttons
     this.fieldContainerTarget.classList.remove('ms:hidden');
-    this.previewElementTarget.classList.add('ms:hidden');
+    this.previewPaneTarget.classList.add('ms:hidden');
 
     // toggle the toolbar back
-    this.toolbarTarget.classList.remove('ms:hidden');
+    this.toolbarTarget.classList.remove('ms:opacity-0', 'ms:pointer-events-none');
   }
 
   switchToPreview(event) {
@@ -55,25 +57,25 @@ class marksmith_controller extends Controller {
     post(this.previewUrlValue, {
       body: {
         body: this.fieldElementTarget.value,
-        element_id: this.previewElementTarget.id,
+        element_id: this.previewPaneTarget.id,
         extra_params: this.extraPreviewParamsValue,
       },
       responseKind: 'turbo-stream',
     });
 
     // set the min height to the field element height
-    this.previewElementTarget.style.minHeight = `${this.fieldElementTarget.offsetHeight}px`;
+    this.previewPaneTarget.style.minHeight = `${this.fieldElementTarget.offsetHeight}px`;
 
     // toggle buttons
-    this.writeTabButtonTarget.classList.remove('ms:hidden');
-    this.previewTabButtonTarget.classList.add('ms:hidden');
+    this.writeTabButtonTarget.classList.remove(this.activeTabClass);
+    this.previewTabButtonTarget.classList.add(this.activeTabClass);
 
     // toggle elements
     this.fieldContainerTarget.classList.add('ms:hidden');
-    this.previewElementTarget.classList.remove('ms:hidden');
+    this.previewPaneTarget.classList.remove('ms:hidden');
 
     // toggle the toolbar
-    this.toolbarTarget.classList.add('ms:hidden');
+    this.toolbarTarget.classList.add('ms:opacity-0', 'ms:pointer-events-none');
   }
 
   dropUpload(event) {

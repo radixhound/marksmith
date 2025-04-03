@@ -33,14 +33,14 @@ module Marksmith
     def marksmith_tab_classes
       class_names(
         # marksmith_button_classes,
-        "marksmith-toggle-button ms:text-sm ms:hover:bg-neutral-300 ms:uppercase ms:text-xs ms:font-semibold ms:cursor-pointer ms:text-neutral-400 ms:px-3",
+        "marksmith-toggle-button ms:text-sm ms:hover:bg-neutral-300 ms:text-sm ms:font-medium ms:cursor-pointer ms:text-neutral-500 ms:px-3",
         # borders
         "ms:bg-transparent ms:hover:bg-transparent",
         "ms:-my-px ms:-ml-px ms:border ms:border-transparent",
         "ms:h-[calc(100%+3px)] ms:border-b-none",
         # "ms:border-b-neutral-00",
         # active classes
-        "ms:[.active]:bg-neutral-50 ms:[.active]:text-neutral-600 ms:dark:[.active]:text-neutral-300 ms:[.active]:dark:bg-neutral-800 ms:[.active]:dark:border-neutral-500 ms:[.active]:rounded-t-md ms:[.active]:border-neutral-500",
+        "ms:[.active]:bg-neutral-50 ms:[.active]:text-neutral-900 ms:dark:[.active]:text-neutral-300 ms:[.active]:dark:bg-neutral-800 ms:[.active]:dark:border-neutral-500 ms:[.active]:rounded-t-md ms:[.active]:border-neutral-500",
 
       )
     end
