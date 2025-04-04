@@ -227,11 +227,22 @@ application.register('list-continuation', ListContinuationController)
 
 ## Dark mode
 
-Marksmith comes with dark mode built in using the `.dark` class on the `html` element strategy.
+Marksmith comes with dark mode built in using the `.dark` class on a wrapper element strategy.
 
-```html
+```erb
+<!-- Wrapper element -->
+<div class="dark">
+  <%= marksmith_tag :body %>
+</div>
+
+<!-- or -->
+<%= form_with model: post, class: "dark" do |form| %>
+  <%= form.marksmith :body %>
+<% end %>
+
+<!-- or -->
 <html class="dark">
-...
+  <%= marksmith_tag :body %>
 </html>
 ```
 
