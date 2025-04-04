@@ -17,6 +17,7 @@
     extra_preview_params: {
       resource_class: @resource.class.name,
       field_id: @field.id,
+      **@field.extra_preview_params
     }
   %>
 <% end %>

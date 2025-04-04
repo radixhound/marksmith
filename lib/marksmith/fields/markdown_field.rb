@@ -1,8 +1,11 @@
 module Marksmith
   module Fields
     class MarkdownField < Avo::Fields::BaseField
+      attr_reader :extra_preview_params
+
       def initialize(id, **args, &block)
         @media_library = args[:media_library].nil? ? true : args[:media_library]
+        @extra_preview_params = args[:extra_preview_params] || {}
 
         super(id, **args, &block)
 
