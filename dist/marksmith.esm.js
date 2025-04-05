@@ -1,5 +1,5 @@
 /*!
-Marksmith 0.4.3
+Marksmith 0.4.4
 */
 var __classPrivateFieldGet = (undefined && undefined.__classPrivateFieldGet) || function (receiver, state, kind, f) {
     if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
@@ -2414,15 +2414,15 @@ function installAround(el, installCallbacks, optionConfig) {
     }
     el.addEventListener('paste', unsetSkipFormattedFlag);
 }
-function uninstall$5(el) {
+function uninstall$6(el) {
     el.removeEventListener('keydown', setSkipFormattingFlag);
     el.removeEventListener('paste', unsetSkipFormattedFlag);
 }
 
-function install$4(el) {
+function install$5(el) {
     el.addEventListener('paste', onPaste$4);
 }
-function uninstall$4(el) {
+function uninstall$5(el) {
     el.removeEventListener('paste', onPaste$4);
 }
 function onPaste$4(event) {
@@ -2536,12 +2536,12 @@ function isTeamMention(link) {
     return ((_a = link.textContent) === null || _a === undefined ? undefined : _a.slice(0, 1)) === '@' && link.getAttribute('data-hovercard-type') === 'team';
 }
 
-function install$3(el) {
+function install$4(el) {
     el.addEventListener('dragover', onDragover$1);
     el.addEventListener('drop', onDrop$1);
     el.addEventListener('paste', onPaste$3);
 }
-function uninstall$3(el) {
+function uninstall$4(el) {
     el.removeEventListener('dragover', onDragover$1);
     el.removeEventListener('drop', onDrop$1);
     el.removeEventListener('paste', onPaste$3);
@@ -2604,12 +2604,12 @@ function isImageLink(url) {
 }
 
 const pasteLinkAsPlainTextOverSelectedTextMap = new WeakMap();
-function install$2(el, optionConfig) {
+function install$3(el, optionConfig) {
     var _a;
     pasteLinkAsPlainTextOverSelectedTextMap.set(el, ((_a = optionConfig === null || optionConfig === undefined ? undefined : optionConfig.defaultPlainTextPaste) === null || _a === undefined ? undefined : _a.urlLinks) === true);
     el.addEventListener('paste', onPaste$2);
 }
-function uninstall$2(el) {
+function uninstall$3(el) {
     el.removeEventListener('paste', onPaste$2);
 }
 function onPaste$2(event) {
@@ -2673,12 +2673,12 @@ function removeTrailingSlash(url) {
     return url.endsWith('/') ? url.slice(0, url.length - 1) : url;
 }
 
-function install$1(el) {
+function install$2(el) {
     el.addEventListener('dragover', onDragover);
     el.addEventListener('drop', onDrop);
     el.addEventListener('paste', onPaste$1);
 }
-function uninstall$1(el) {
+function uninstall$2(el) {
     el.removeEventListener('dragover', onDragover);
     el.removeEventListener('drop', onDrop);
     el.removeEventListener('paste', onPaste$1);
@@ -2769,10 +2769,10 @@ function generateText(transfer) {
     return [start, formattedTable, end].join('').replace(/<meta.*?>/, '');
 }
 
-function install(el) {
+function install$1(el) {
     el.addEventListener('paste', onPaste);
 }
-function uninstall(el) {
+function uninstall$1(el) {
     el.removeEventListener('paste', onPaste);
 }
 function onPaste(event) {
@@ -2797,17 +2797,440 @@ function hasMarkdown(transfer) {
 }
 
 function subscribe(el, optionConfig) {
-    installAround(el, [install$1, install$3, install$2, install, install$4], optionConfig);
+    installAround(el, [install$2, install$4, install$3, install$1, install$5], optionConfig);
     return {
         unsubscribe: () => {
+            uninstall$6(el);
+            uninstall$2(el);
             uninstall$5(el);
-            uninstall$1(el);
             uninstall$4(el);
             uninstall$3(el);
-            uninstall$2(el);
-            uninstall(el);
+            uninstall$1(el);
         },
     };
+}
+
+class Leaf {
+    constructor(trie) {
+        this.children = [];
+        this.parent = trie;
+    }
+    delete(value) {
+        const index = this.children.indexOf(value);
+        if (index === -1)
+            return false;
+        this.children = this.children.slice(0, index).concat(this.children.slice(index + 1));
+        if (this.children.length === 0) {
+            this.parent.delete(this);
+        }
+        return true;
+    }
+    add(value) {
+        this.children.push(value);
+        return this;
+    }
+}
+class RadixTrie {
+    constructor(trie) {
+        this.parent = null;
+        this.children = {};
+        this.parent = trie || null;
+    }
+    get(edge) {
+        return this.children[edge];
+    }
+    insert(edges) {
+        let currentNode = this;
+        for (let i = 0; i < edges.length; i += 1) {
+            const edge = edges[i];
+            let nextNode = currentNode.get(edge);
+            if (i === edges.length - 1) {
+                if (nextNode instanceof RadixTrie) {
+                    currentNode.delete(nextNode);
+                    nextNode = null;
+                }
+                if (!nextNode) {
+                    nextNode = new Leaf(currentNode);
+                    currentNode.children[edge] = nextNode;
+                }
+                return nextNode;
+            }
+            else {
+                if (nextNode instanceof Leaf)
+                    nextNode = null;
+                if (!nextNode) {
+                    nextNode = new RadixTrie(currentNode);
+                    currentNode.children[edge] = nextNode;
+                }
+            }
+            currentNode = nextNode;
+        }
+        return currentNode;
+    }
+    delete(node) {
+        for (const edge in this.children) {
+            const currentNode = this.children[edge];
+            if (currentNode === node) {
+                const success = delete this.children[edge];
+                if (Object.keys(this.children).length === 0 && this.parent) {
+                    this.parent.delete(this);
+                }
+                return success;
+            }
+        }
+        return false;
+    }
+}
+
+const macosSymbolLayerKeys = {
+    ['¡']: '1',
+    ['™']: '2',
+    ['£']: '3',
+    ['¢']: '4',
+    ['∞']: '5',
+    ['§']: '6',
+    ['¶']: '7',
+    ['•']: '8',
+    ['ª']: '9',
+    ['º']: '0',
+    ['–']: '-',
+    ['≠']: '=',
+    ['⁄']: '!',
+    ['€']: '@',
+    ['‹']: '#',
+    ['›']: '$',
+    ['ﬁ']: '%',
+    ['ﬂ']: '^',
+    ['‡']: '&',
+    ['°']: '*',
+    ['·']: '(',
+    ['‚']: ')',
+    ['—']: '_',
+    ['±']: '+',
+    ['œ']: 'q',
+    ['∑']: 'w',
+    ['®']: 'r',
+    ['†']: 't',
+    ['¥']: 'y',
+    ['ø']: 'o',
+    ['π']: 'p',
+    ['“']: '[',
+    ['‘']: ']',
+    ['«']: '\\',
+    ['Œ']: 'Q',
+    ['„']: 'W',
+    ['´']: 'E',
+    ['‰']: 'R',
+    ['ˇ']: 'T',
+    ['Á']: 'Y',
+    ['¨']: 'U',
+    ['ˆ']: 'I',
+    ['Ø']: 'O',
+    ['∏']: 'P',
+    ['”']: '{',
+    ['’']: '}',
+    ['»']: '|',
+    ['å']: 'a',
+    ['ß']: 's',
+    ['∂']: 'd',
+    ['ƒ']: 'f',
+    ['©']: 'g',
+    ['˙']: 'h',
+    ['∆']: 'j',
+    ['˚']: 'k',
+    ['¬']: 'l',
+    ['…']: ';',
+    ['æ']: "'",
+    ['Å']: 'A',
+    ['Í']: 'S',
+    ['Î']: 'D',
+    ['Ï']: 'F',
+    ['˝']: 'G',
+    ['Ó']: 'H',
+    ['Ô']: 'J',
+    ['']: 'K',
+    ['Ò']: 'L',
+    ['Ú']: ':',
+    ['Æ']: '"',
+    ['Ω']: 'z',
+    ['≈']: 'x',
+    ['ç']: 'c',
+    ['√']: 'v',
+    ['∫']: 'b',
+    ['µ']: 'm',
+    ['≤']: ',',
+    ['≥']: '.',
+    ['÷']: '/',
+    ['¸']: 'Z',
+    ['˛']: 'X',
+    ['Ç']: 'C',
+    ['◊']: 'V',
+    ['ı']: 'B',
+    ['˜']: 'N',
+    ['Â']: 'M',
+    ['¯']: '<',
+    ['˘']: '>',
+    ['¿']: '?'
+};
+
+const macosUppercaseLayerKeys = {
+    ['`']: '~',
+    ['1']: '!',
+    ['2']: '@',
+    ['3']: '#',
+    ['4']: '$',
+    ['5']: '%',
+    ['6']: '^',
+    ['7']: '&',
+    ['8']: '*',
+    ['9']: '(',
+    ['0']: ')',
+    ['-']: '_',
+    ['=']: '+',
+    ['[']: '{',
+    [']']: '}',
+    ['\\']: '|',
+    [';']: ':',
+    ["'"]: '"',
+    [',']: '<',
+    ['.']: '>',
+    ['/']: '?',
+    ['q']: 'Q',
+    ['w']: 'W',
+    ['e']: 'E',
+    ['r']: 'R',
+    ['t']: 'T',
+    ['y']: 'Y',
+    ['u']: 'U',
+    ['i']: 'I',
+    ['o']: 'O',
+    ['p']: 'P',
+    ['a']: 'A',
+    ['s']: 'S',
+    ['d']: 'D',
+    ['f']: 'F',
+    ['g']: 'G',
+    ['h']: 'H',
+    ['j']: 'J',
+    ['k']: 'K',
+    ['l']: 'L',
+    ['z']: 'Z',
+    ['x']: 'X',
+    ['c']: 'C',
+    ['v']: 'V',
+    ['b']: 'B',
+    ['n']: 'N',
+    ['m']: 'M'
+};
+
+const syntheticKeyNames = {
+    ' ': 'Space',
+    '+': 'Plus'
+};
+function eventToHotkeyString(event, platform = navigator.platform) {
+    var _a, _b, _c;
+    const { ctrlKey, altKey, metaKey, shiftKey, key } = event;
+    const hotkeyString = [];
+    const modifiers = [ctrlKey, altKey, metaKey, shiftKey];
+    for (const [i, mod] of modifiers.entries()) {
+        if (mod)
+            hotkeyString.push(modifierKeyNames[i]);
+    }
+    if (!modifierKeyNames.includes(key)) {
+        const altNormalizedKey = hotkeyString.includes('Alt') && matchApplePlatform.test(platform) ? (_a = macosSymbolLayerKeys[key]) !== null && _a !== undefined ? _a : key : key;
+        const shiftNormalizedKey = hotkeyString.includes('Shift') && matchApplePlatform.test(platform)
+            ? (_b = macosUppercaseLayerKeys[altNormalizedKey]) !== null && _b !== undefined ? _b : altNormalizedKey
+            : altNormalizedKey;
+        const syntheticKey = (_c = syntheticKeyNames[shiftNormalizedKey]) !== null && _c !== undefined ? _c : shiftNormalizedKey;
+        hotkeyString.push(syntheticKey);
+    }
+    return hotkeyString.join('+');
+}
+const modifierKeyNames = ['Control', 'Alt', 'Meta', 'Shift'];
+function normalizeHotkey(hotkey, platform) {
+    let result;
+    result = localizeMod(hotkey);
+    result = sortModifiers(result);
+    return result;
+}
+const matchApplePlatform = /Mac|iPod|iPhone|iPad/i;
+function localizeMod(hotkey, platform) {
+    var _a;
+    const ssrSafeWindow = typeof window === 'undefined' ? undefined : window;
+    const safePlatform = (_a = ssrSafeWindow === null || ssrSafeWindow === undefined ? undefined : ssrSafeWindow.navigator.platform) !== null && _a !== undefined ? _a : '';
+    const localModifier = matchApplePlatform.test(safePlatform) ? 'Meta' : 'Control';
+    return hotkey.replace('Mod', localModifier);
+}
+function sortModifiers(hotkey) {
+    const key = hotkey.split('+').pop();
+    const modifiers = [];
+    for (const modifier of ['Control', 'Alt', 'Meta', 'Shift']) {
+        if (hotkey.includes(modifier)) {
+            modifiers.push(modifier);
+        }
+    }
+    if (key)
+        modifiers.push(key);
+    return modifiers.join('+');
+}
+
+const SEQUENCE_DELIMITER = ' ';
+class SequenceTracker {
+    constructor({ onReset } = {}) {
+        this._path = [];
+        this.timer = null;
+        this.onReset = onReset;
+    }
+    get path() {
+        return this._path;
+    }
+    get sequence() {
+        return this._path.join(SEQUENCE_DELIMITER);
+    }
+    registerKeypress(event) {
+        this._path = [...this._path, eventToHotkeyString(event)];
+        this.startTimer();
+    }
+    reset() {
+        var _a;
+        this.killTimer();
+        this._path = [];
+        (_a = this.onReset) === null || _a === undefined ? undefined : _a.call(this);
+    }
+    killTimer() {
+        if (this.timer != null) {
+            window.clearTimeout(this.timer);
+        }
+        this.timer = null;
+    }
+    startTimer() {
+        this.killTimer();
+        this.timer = window.setTimeout(() => this.reset(), SequenceTracker.CHORD_TIMEOUT);
+    }
+}
+SequenceTracker.CHORD_TIMEOUT = 1500;
+
+function isFormField(element) {
+    if (!(element instanceof HTMLElement)) {
+        return false;
+    }
+    const name = element.nodeName.toLowerCase();
+    const type = (element.getAttribute('type') || '').toLowerCase();
+    return (name === 'select' ||
+        name === 'textarea' ||
+        (name === 'input' &&
+            type !== 'submit' &&
+            type !== 'reset' &&
+            type !== 'checkbox' &&
+            type !== 'radio' &&
+            type !== 'file') ||
+        element.isContentEditable);
+}
+function fireDeterminedAction(el, path) {
+    const delegateEvent = new CustomEvent('hotkey-fire', { cancelable: true, detail: { path } });
+    const cancelled = !el.dispatchEvent(delegateEvent);
+    if (cancelled)
+        return;
+    if (isFormField(el)) {
+        el.focus();
+    }
+    else {
+        el.click();
+    }
+}
+function expandHotkeyToEdges(hotkey) {
+    const output = [];
+    let acc = [''];
+    let commaIsSeparator = false;
+    for (let i = 0; i < hotkey.length; i++) {
+        if (commaIsSeparator && hotkey[i] === ',') {
+            output.push(acc);
+            acc = [''];
+            commaIsSeparator = false;
+            continue;
+        }
+        if (hotkey[i] === SEQUENCE_DELIMITER) {
+            acc.push('');
+            commaIsSeparator = false;
+            continue;
+        }
+        else if (hotkey[i] === '+') {
+            commaIsSeparator = false;
+        }
+        else {
+            commaIsSeparator = true;
+        }
+        acc[acc.length - 1] += hotkey[i];
+    }
+    output.push(acc);
+    return output.map(h => h.map(k => normalizeHotkey(k)).filter(k => k !== '')).filter(h => h.length > 0);
+}
+
+const hotkeyRadixTrie = new RadixTrie();
+const elementsLeaves = new WeakMap();
+let currentTriePosition = hotkeyRadixTrie;
+const sequenceTracker = new SequenceTracker({
+    onReset() {
+        currentTriePosition = hotkeyRadixTrie;
+    }
+});
+function keyDownHandler(event) {
+    if (event.defaultPrevented)
+        return;
+    if (!(event.target instanceof Node))
+        return;
+    if (isFormField(event.target)) {
+        const target = event.target;
+        if (!target.id)
+            return;
+        if (!target.ownerDocument.querySelector(`[data-hotkey-scope="${target.id}"]`))
+            return;
+    }
+    const newTriePosition = currentTriePosition.get(eventToHotkeyString(event));
+    if (!newTriePosition) {
+        sequenceTracker.reset();
+        return;
+    }
+    sequenceTracker.registerKeypress(event);
+    currentTriePosition = newTriePosition;
+    if (newTriePosition instanceof Leaf) {
+        const target = event.target;
+        let shouldFire = false;
+        let elementToFire;
+        const formField = isFormField(target);
+        for (let i = newTriePosition.children.length - 1; i >= 0; i -= 1) {
+            elementToFire = newTriePosition.children[i];
+            const scope = elementToFire.getAttribute('data-hotkey-scope');
+            if ((!formField && !scope) || (formField && target.id === scope)) {
+                shouldFire = true;
+                break;
+            }
+        }
+        if (elementToFire && shouldFire) {
+            fireDeterminedAction(elementToFire, sequenceTracker.path);
+            event.preventDefault();
+        }
+        sequenceTracker.reset();
+    }
+}
+function install(element, hotkey) {
+    if (Object.keys(hotkeyRadixTrie.children).length === 0) {
+        document.addEventListener('keydown', keyDownHandler);
+    }
+    const hotkeys = expandHotkeyToEdges(element.getAttribute('data-hotkey') || '');
+    const leaves = hotkeys.map(h => hotkeyRadixTrie.insert(h).add(element));
+    elementsLeaves.set(element, leaves);
+}
+function uninstall(element) {
+    const leaves = elementsLeaves.get(element);
+    if (leaves && leaves.length) {
+        for (const leaf of leaves) {
+            leaf && leaf.delete(element);
+        }
+    }
+    if (Object.keys(hotkeyRadixTrie.children).length === 0) {
+        document.removeEventListener('keydown', keyDownHandler);
+    }
 }
 
 /* eslint-disable camelcase */
@@ -2836,7 +3259,19 @@ class marksmith_controller extends Controller {
   }
 
   connect() {
-    subscribe(this.fieldContainerTarget, { defaultPlainTextPaste: { urlLinks: true } });
+    subscribe(this.fieldElementTarget);
+
+    // Install all the hotkeys on the page
+    for (const el of document.querySelectorAll('[data-hotkey]')) {
+      install(el);
+    }
+  }
+
+  disconnect() {
+    // Uninstall all the hotkeys on the page
+    for (const el of document.querySelectorAll('[data-hotkey]')) {
+      uninstall(el);
+    }
   }
 
   switchToWrite(event) {
