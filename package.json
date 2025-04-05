@@ -48,6 +48,7 @@
     "build:css": "npx @tailwindcss/cli -i app/frontend/entrypoints/application.css -o app/assets/stylesheets/marksmith.css"
   },
   "dependencies": {
+    "@github/hotkey": "^3.1.1",
     "vite-plugin-rails": "^0.5.0"
   }
 }
