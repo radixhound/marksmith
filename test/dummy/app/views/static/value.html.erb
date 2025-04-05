@@ -1,1 +1,13 @@
 <%= marksmith_tag :content, value: "**TEXT EXAMPLE**", id: "static-value" %>
+
+<br>
+<br>
+
+<%= turbo_frame_tag :lol do %>
+  <% if params[:load_another] %>
+    <%= marksmith_tag :content, value: "**TEXT EXAMPLE 2**", id: "static-value-2" %>
+  <% else %>
+    <%= link_to "load another editor", "/static/value?load_another=1" %>
+  <% end %>
+
+<% end %>

@@ -101,4 +101,12 @@ class Marksmith::Editor
   def value
     form&.object&.send(name) || @value || nil
   end
+
+  def textarea_id
+    "#{id}-textarea"
+  end
+
+  def preview_pane_id
+    "#{id}-preview-pane"
+  end
 end
