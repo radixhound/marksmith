@@ -4,6 +4,7 @@ import { Controller } from '@hotwired/stimulus'
 import { DirectUpload } from '@rails/activestorage'
 import { post } from '@rails/request.js'
 import { subscribe } from '@github/paste-markdown'
+import {install, uninstall} from '@github/hotkey'
 
 // upload code from Jeremy Smith's blog post
 // https://hybrd.co/posts/github-issue-style-file-uploader-using-stimulus-and-active-storage
@@ -29,7 +30,19 @@ export default class extends Controller {
   }
 
   connect() {
-    subscribe(this.fieldContainerTarget, { defaultPlainTextPaste: { urlLinks: true } })
+    subscribe(this.fieldElementTarget)
+
+    // Install all the hotkeys on the page
+    for (const el of document.querySelectorAll('[data-hotkey]')) {
+      install(el)
+    }
+  }
+
+  disconnect() {
+    // Uninstall all the hotkeys on the page
+    for (const el of document.querySelectorAll('[data-hotkey]')) {
+      uninstall(el)
+    }
   }
 
   switchToWrite(event) {

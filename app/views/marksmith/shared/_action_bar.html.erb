@@ -2,9 +2,9 @@
   class: class_names("ms:flex ms:flex-wrap ms:px-2 ms:py-1", "ms:pointer-events-none": disabled),
   data: { marksmith_target: "toolbar" } do
 %>
-  <%= marksmith_toolbar_button "bold" %>
-  <%= marksmith_toolbar_button "header" %>
-  <%= marksmith_toolbar_button "italic" %>
+  <%= marksmith_toolbar_button "bold",           hotkey: "Meta+b", hotkey_scope: textarea_id %>
+  <%= marksmith_toolbar_button "header",         hotkey: "Meta+h", hotkey_scope: textarea_id %>
+  <%= marksmith_toolbar_button "italic",         hotkey: "Meta+i", hotkey_scope: textarea_id %>
   <%= marksmith_toolbar_button "quote" %>
   <%= marksmith_toolbar_button "code" %>
   <%= marksmith_toolbar_button "link" %>
