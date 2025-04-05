@@ -26,8 +26,14 @@ module Marksmith
       )
     end
 
-    def marksmith_toolbar_button(name, **kwargs)
-      content_tag "md-#{name}", marksmith_toolbar_svg(name), title: t("marksmith.#{name.to_s.gsub("-", "_")}").humanize, class: marksmith_button_classes
+    def marksmith_toolbar_button(name, hotkey_scope: nil, hotkey: nil, **kwargs)
+      content_tag "md-#{name}", marksmith_toolbar_svg(name),
+        title: t("marksmith.#{name.to_s.gsub("-", "_")}").humanize,
+        class: marksmith_button_classes,
+        data: {
+          hotkey_scope:,
+          hotkey:
+        }
     end
 
     def marksmith_tab_classes
